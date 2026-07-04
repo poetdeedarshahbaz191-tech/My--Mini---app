@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Poet Deedar Shahbaz</title>
+</head>
+
+<body>
+
+<h1>Poet Deedar Shahbaz</h1>
+
+<p>Welcome to my Poetry Mini App.</p>
+
+<textarea rows="10" cols="40" placeholder="Write your poetry here..."></textarea>
+
+<br><br>
+
+<button onclick="showMessage()">Show Poetry</button>
+
+<p id="message"></p>
+
+<script>
+function showMessage() {
+  document.getElementById("message").innerHTML =
+    "Thank you for reading my poetry!";
+}
+</script>
+
+</body>
+</html>
