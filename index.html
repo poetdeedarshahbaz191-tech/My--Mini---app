@@ -59,6 +59,7 @@ pre{
 </a>
 
 <br><br>
+    <div id="poetry"></div>
 <pre>
 
 
@@ -150,6 +151,48 @@ pre{
 </pre>
 
 </div>
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
+  authDomain: "poet--deedar---shahbaz.firebaseapp.com",
+  projectId: "poet--deedar---shahbaz",
+  storageBucket: "poet--deedar---shahbaz.firebasestorage.app",
+  messagingSenderId: "411582745091",
+  appId: "1:411582745091:web:96413eef58092e77911c36",
+  measurementId: "G-E0V5QH9D98"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+const poetryBox = document.getElementById("poetry");
+
+
+const querySnapshot = await getDocs(collection(db, "poems"));
+
+
+querySnapshot.forEach((doc) => {
+
+const data = doc.data();
+
+poetryBox.innerHTML += `
+
+<h2>${data.title}</h2>
+
+<pre>${data.poem}</pre>
+
+`;
+
+});
+
+</script>
 </body>
 </html>
