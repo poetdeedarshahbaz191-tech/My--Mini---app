@@ -213,11 +213,13 @@ h1{
 <script type="module"> 
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 import {
   getFirestore,
   collection,
   getDocs,
   deleteDoc,
+  updateDoc,
   doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
@@ -249,29 +251,36 @@ querySnapshot.forEach((poemDoc) => {
         <pre>${data.poem}</pre>
       </div>
 
-      <button onclick="deletePoem('${poemDoc.id}')">
-        🗑 Delete
-      </button>
+      <button onclick="editPoem('${poemDoc.id}')">
+  ✏️ Edit
+</button>
+
+<button onclick="deletePoem('${poemDoc.id}')">
+  🗑 Delete
+</button> 
 
     </div>
   `;
 });
 
 
+
+globalThis.editPoem = function(id){
+    alert("Edit button is working! ID: " + id);
+};
+
 globalThis.deletePoem = async function(id){
-  if(!confirm("Delete this poem?")){
-    return;
-  }
+    if(!confirm("Delete this poem?")) return;
 
-  try{
-    await deleteDoc(doc(db, "poems", id));
-    alert("Poem deleted successfully.");
-    location.reload();
-  }catch(error){
-    alert(error.message);
-  }
-
+    try{
+        await deleteDoc(doc(db, "poems", id));
+        alert("Poem deleted successfully.");
+        location.reload();
+    }catch(error){
+        alert(error.message);
     }
+};
+ 
 </script>
 </body>
 </html>
