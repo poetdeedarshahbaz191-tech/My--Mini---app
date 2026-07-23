@@ -252,9 +252,7 @@ querySnapshot.forEach((poemDoc) => {
       </div>
 
       
-<button onclick="editPoem('${poemDoc.id}')">
-    ✏️ Edit
-</button>
+
 
 <button onclick="deletePoem('${poemDoc.id}')">
     🗑 Delete
@@ -264,42 +262,22 @@ querySnapshot.forEach((poemDoc) => {
   `;
 });
 
+ globalThis.deletePoem = async function(id){
 
-
-globalThis.editPoem = async function(id){
-
-    const newTitle = prompt("Enter new title:");
-    if(newTitle === null) return;
-
-    const newPoem = prompt("Enter new poem:");
-    if(newPoem === null) return;
-
-    try{
-        await updateDoc(doc(db, "poems", id), {
-            title: newTitle,
-            poem: newPoem
-        });
-
-        alert("Poem updated successfully!");
-        location.reload();
-
-    } catch(error){
-        alert(error.message);
-    }
-};
-
-globalThis.deletePoem = async function(id){
     if(!confirm("Delete this poem?")) return;
 
     try{
         await deleteDoc(doc(db, "poems", id));
+
         alert("Poem deleted successfully.");
+
         location.reload();
+
     }catch(error){
         alert(error.message);
     }
+
 };
- 
 </script>
 </body>
 </html>
