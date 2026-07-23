@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Poem</title>
+
+<style>
+
+body{
+    font-family:Georgia, serif;
+    background:linear-gradient(135deg,#ffe6f0,#fff7cc,#e8f5ff);
+    padding:20px;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    color:#8B0000;
+}
+
+input, textarea{
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    font-size:18px;
+    box-sizing:border-box;
+    border-radius:10px;
+}
+
+textarea{
+    height:300px;
+}
+
+button{
+    padding:12px 20px;
+    background:#8B0000;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌹 Edit Poem 🌹</h1>
+
+<input id="title" placeholder="Poem title">
+
+<textarea id="poem" placeholder="Write poem"></textarea>
+
+<button id="updateBtn">
+Update Poem
+</button>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
+  authDomain: "poet--deedar---shahbaz.firebaseapp.com",
+  projectId: "poet--deedar---shahbaz",
+  storageBucket: "poet--deedar---shahbaz.firebasestorage.app",
+  messagingSenderId: "411582745091",
+  appId: "1:411582745091:web:96413eef58092e77911c36"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+const id = new URLSearchParams(location.search).get("id");
+
+
+const poemRef = doc(db,"poems",id);
+
+
+const snap = await getDoc(poemRef);
+
+
+if(snap.exists()){
+
+    const data = snap.data();
+
+    document.getElementById("title").value = data.title;
+
+    document.getElementById("poem").value = data.poem;
+
+}
+
+
+
+document.getElementById("updateBtn").onclick = async()=>{
+
+
+    await updateDoc(poemRef,{
+
+        title: document.getElementById("title").value,
+
+        poem: document.getElementById("poem").value
+
+    });
+
+
+    alert("Poem updated successfully!");
+
+    location.href="index.html";
+
+
+};
+
+
+</script>
+
+</body>
+</html>
