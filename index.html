@@ -213,7 +213,13 @@ h1{
 <script type="module"> 
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
   authDomain: "poet--deedar---shahbaz.firebaseapp.com",
@@ -231,19 +237,41 @@ const poetryBox = document.getElementById("poetry");
 
 const querySnapshot = await getDocs(collection(db, "poems"));
 
-querySnapshot.forEach((doc) => {
-  const data = doc.data();
+querySnapshot.forEach((poemDoc) => {
+
+  const data = poemDoc.data();
 
   poetryBox.innerHTML += `
     <div class="poem-card">
       <h2 class="poem-title">${data.title}</h2>
+
       <div class="poem-text">
         <pre>${data.poem}</pre>
       </div>
+
+      <button onclick="deletePoem('${poemDoc.id}')">
+        🗑 Delete
+      </button>
+
     </div>
   `;
 });
 
+
+globalThis.deletePoem = async function(id){
+  if(!confirm("Delete this poem?")){
+    return;
+  }
+
+  try{
+    await deleteDoc(doc(db, "poems", id));
+    alert("Poem deleted successfully.");
+    location.reload();
+  }catch(error){
+    alert(error.message);
+  }
+
+    }
 </script>
 </body>
 </html>
