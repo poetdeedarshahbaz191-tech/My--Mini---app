@@ -220,8 +220,9 @@ import {
   getDocs,
   deleteDoc,
   updateDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  doc,
+  increment
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
 const firebaseConfig = {
   apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
   authDomain: "poet--deedar---shahbaz.firebaseapp.com",
@@ -253,10 +254,14 @@ querySnapshot.forEach((poemDoc) => {
       
 
 
-
 <button onclick="editPoem('${poemDoc.id}')">
     ✏ Edit
 </button>
+
+<button onclick="likePoem('${poemDoc.id}')">
+    ❤️ Like
+</button>
+
 <button onclick="deletePoem('${poemDoc.id}')">
     🗑 Delete
 </button>
@@ -283,6 +288,21 @@ querySnapshot.forEach((poemDoc) => {
 };
     globalThis.editPoem = function(id){
     window.location.href = "edit.html?id=" + id;
+};
+    globalThis.likePoem = async function(id){
+
+    try{
+        await updateDoc(doc(db, "poems", id), {
+            likes: increment(1)
+        });
+
+        alert("❤️ Thanks for liking!");
+        location.reload();
+
+    }catch(error){
+        alert(error.message);
+    }
+
 };
 </script>
 </body>
