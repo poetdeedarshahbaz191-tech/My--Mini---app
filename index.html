@@ -254,6 +254,10 @@ querySnapshot.forEach((poemDoc) => {
       
 
 
+<button onclick="editPoem('${poemDoc.id}')">
+    ✏ Edit
+</button>
+
 <button onclick="deletePoem('${poemDoc.id}')">
     🗑 Delete
 </button>
