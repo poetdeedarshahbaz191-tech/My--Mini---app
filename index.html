@@ -23,13 +23,16 @@ h1{
 }
 
 .poem-card{
+    width:100%;
     max-width:900px;
+    box-sizing:border-box;
     margin:25px auto;
-    padding:25px;
+    padding:20px;
+    overflow:hidden;
     border-radius:20px;
     box-shadow:0 8px 20px rgba(0,0,0,.2);
-    color:#222;
 }
+    
 
 .poem-card:nth-child(4n+1){
     background:#fff0f5;
@@ -56,12 +59,20 @@ h1{
 
 .poem-text{
     white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    word-break:break-word;
     direction:rtl;
     text-align:right;
     line-height:2;
-    font-size:24px;
+    font-size:20px;
+    width:100%;
 }
-
+.poem-text pre{
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    margin:0;
+    font-family:Georgia, serif;
+}
 button{
     margin-top:20px;
     padding:10px 18px;
