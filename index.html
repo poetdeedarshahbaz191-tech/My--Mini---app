@@ -240,7 +240,6 @@ const poetryBox = document.getElementById("poetry");
 const querySnapshot = await getDocs(collection(db, "poems"));
 
 querySnapshot.forEach((poemDoc) => {
-
   const data = poemDoc.data();
 
   poetryBox.innerHTML += `
@@ -254,10 +253,10 @@ querySnapshot.forEach((poemDoc) => {
       
 
 
+
 <button onclick="editPoem('${poemDoc.id}')">
     ✏ Edit
 </button>
-
 <button onclick="deletePoem('${poemDoc.id}')">
     🗑 Delete
 </button>
