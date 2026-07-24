@@ -307,6 +307,11 @@ querySnapshot.forEach((poemDoc) => {
             text: "Read this beautiful poem",
             url: url
         });
+    } else {
+        navigator.clipboard.writeText(url);
+        alert("Link copied!");
+    }
+};
                            
      import {
   getFirestore,
