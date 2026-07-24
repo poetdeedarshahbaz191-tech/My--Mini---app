@@ -257,7 +257,21 @@ querySnapshot.forEach((poemDoc) => {
 <button onclick="editPoem('${poemDoc.id}')">
     ✏ Edit
 </button>
+button onclick="likePoem('${poemDoc.id}')">
+    ❤️ Like
+</button>
 
+<button onclick="editPoem('${poemDoc.id}')">
+    ✏ Edit
+</button>
+
+<button onclick="sharePoem('${poemDoc.id}')">
+    📤 Share
+</button>
+
+<button onclick="deletePoem('${poemDoc.id}')">
+    🗑 Delete
+</button
 <button onclick="sharePoem('${poemDoc.id}')">
     📤 Share
 </button>
