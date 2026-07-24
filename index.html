@@ -214,7 +214,8 @@ h1{
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import {
+
+  import {
   getFirestore,
   collection,
   getDocs,
@@ -222,9 +223,10 @@ import {
   deleteDoc,
   updateDoc,
   doc,
-  increment
+  increment,
+  addDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-  
 const firebaseConfig = {
   apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
   authDomain: "poet--deedar---shahbaz.firebaseapp.com",
