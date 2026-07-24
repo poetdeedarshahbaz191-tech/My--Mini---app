@@ -321,6 +321,7 @@ querySnapshot.forEach((poemDoc) => {
         <textarea id="commentText-${id}" placeholder="Write a comment..."></textarea>
         <br>
         <button onclick="postComment('${id}')">Post</button>
+        <div id="commentList-${id}"></div>
     `;
 };
 
