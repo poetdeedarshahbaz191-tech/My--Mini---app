@@ -317,7 +317,7 @@ querySnapshot.forEach((poemDoc) => {
 };
                            
      globalThis.commentPoem = function(id) {
-    alert("Comment button clicked!");
+    window.location.href = "comment.html?id=" + id;
 };
 
    globalThis.postComment = async function(id) {
