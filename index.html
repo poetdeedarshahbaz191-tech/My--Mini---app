@@ -327,7 +327,7 @@ querySnapshot.forEach((poemDoc) => {
     `;
 };
 
-    globalThis.postComment = function(id) {
+   globalThis.postComment = async function(id) {
     const text = document.getElementById("commentText-" + id).value.trim();
 
     if (!text) {
@@ -335,9 +335,20 @@ querySnapshot.forEach((poemDoc) => {
         return;
     }
 
-    alert("Comment: " + text);
+    try {
+        await addDoc(collection(db, "Comments"), {
+            poemId: id,
+            text: text,
+            time: serverTimestamp()
+        });
 
-    document.getElementById("comments-" + id).innerHTML = "";
+        alert("Comment posted successfully!");
+
+        document.getElementById("commentText-" + id).value = "";
+
+    } catch (error) {
+        alert(error.message);
+    }
 };
 </script>
 </body>
