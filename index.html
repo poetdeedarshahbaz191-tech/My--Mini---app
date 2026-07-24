@@ -315,11 +315,10 @@ querySnapshot.forEach((poemDoc) => {
         alert("Link copied!");
     }
 };
-                           
-     globalThis.commentPoem = function(id) {
+    
+globalThis.commentPoem = function(id) {
     window.location.href = "comment.html?id=" + id;
 };
-
    globalThis.postComment = async function(id) {
     const text = document.getElementById("commentText-" + id).value.trim();
 
