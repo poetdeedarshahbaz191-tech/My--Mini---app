@@ -317,14 +317,7 @@ querySnapshot.forEach((poemDoc) => {
 };
                            
      globalThis.commentPoem = function(id) {
-    const area = document.getElementById("comments-" + id);
-
-    area.innerHTML = `
-        <textarea id="commentText-${id}" placeholder="Write a comment..."></textarea>
-        <br>
-        <button onclick="postComment('${id}')">Post</button>
-        <div id="commentList-${id}"></div>
-    `;
+    alert("Comment button clicked!");
 };
 
    globalThis.postComment = async function(id) {
