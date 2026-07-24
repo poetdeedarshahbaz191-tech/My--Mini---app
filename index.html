@@ -271,9 +271,9 @@ querySnapshot.forEach((poemDoc) => {
     🗑 Delete
 </button>
 
+<button onclick="commentPoem('${poemDoc.id}')">💬 Comment</button>
 
-
-
+<div id="comments-${poemDoc.id}"></div>
     </div>
   `;
 });
@@ -314,8 +314,28 @@ querySnapshot.forEach((poemDoc) => {
     }
 };
                            
-     
-              
+     globalThis.commentPoem = function(id) {
+    const area = document.getElementById("comments-" + id);
+
+    area.innerHTML = `
+        <textarea id="commentText-${id}" placeholder="Write a comment..."></textarea>
+        <br>
+        <button onclick="postComment('${id}')">Post</button>
+    `;
+};
+
+    globalThis.postComment = function(id) {
+    const text = document.getElementById("commentText-" + id).value.trim();
+
+    if (!text) {
+        alert("Please write a comment.");
+        return;
+    }
+
+    alert("Comment: " + text);
+
+    document.getElementById("comments-" + id).innerHTML = "";
+};
 </script>
 </body>
 </html>
