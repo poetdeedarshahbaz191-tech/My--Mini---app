@@ -242,7 +242,8 @@ const db = getFirestore(app);
 const poetryBox = document.getElementById("poetry");
 
 const querySnapshot = await getDocs(collection(db, "poems"));
-
+    
+console.log("Poems found:", querySnapshot.size);
 querySnapshot.forEach((poemDoc) => {
   const data = poemDoc.data();
 
