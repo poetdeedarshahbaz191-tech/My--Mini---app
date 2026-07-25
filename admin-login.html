@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Login</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ffe6f0,#fff7cc,#e8f5ff);
+    font-family:Georgia,serif;
+}
+
+.box{
+    width:320px;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    color:#8b0000;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    box-sizing:border-box;
+    border-radius:5px;
+    border:1px solid #ccc;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#8b0000;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+#message{
+    text-align:center;
+    margin-top:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>🌹 Admin Login 🌹</h2>
+
+<input id="email" type="email" placeholder="Email">
+
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p id="message"></p>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { getAuth, signInWithEmailAndPassword } from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+// Paste your Firebase config here
+
+const firebaseConfig = {
+
+apiKey: "YOUR_API_KEY",
+
+authDomain: "YOUR_AUTH_DOMAIN",
+
+projectId: "YOUR_PROJECT_ID",
+
+storageBucket: "YOUR_STORAGE_BUCKET",
+
+messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+
+appId: "YOUR_APP_ID"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+
+window.login = function(){
+
+let email = document.getElementById("email").value;
+
+let password = document.getElementById("password").value;
+
+
+signInWithEmailAndPassword(auth,email,password)
+
+.then((userCredential)=>{
+
+document.getElementById("message").innerHTML=
+"✅ Login successful";
+
+setTimeout(()=>{
+
+window.location.href="publish.html";
+
+},1000);
+
+})
+
+
+.catch((error)=>{
+
+document.getElementById("message").innerHTML=
+"❌ Wrong email or password";
+
+});
+
+}
+
+</script>
+
+
+</body>
+</html>
