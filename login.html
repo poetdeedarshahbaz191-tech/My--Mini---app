@@ -61,14 +61,17 @@ button:hover{
     <input type="email" id="email" placeholder="Enter Email">
     <input type="password" id="password" placeholder="Enter Password">
 
-    <button>Login</button>
+    <button id="loginBtn">Login</button>
 
     <p id="message"></p>
 </div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+  getAuth,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 const firebaseConfig = {
   apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
   authDomain: "poet--deedar---shahbaz.firebaseapp.com",
@@ -81,6 +84,22 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+    
+document.getElementById("loginBtn").addEventListener("click", async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const message = document.getElementById("message");
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    message.style.color = "green";
+    message.textContent = "Login successful!";
+    window.location.href = "publish.html";
+  } catch (error) {
+    message.style.color = "red";
+    message.textContent = error.message;
+  }
+});
 
 </script>
 
