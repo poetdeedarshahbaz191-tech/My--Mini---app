@@ -57,22 +57,10 @@ button{
 <div class="container">
 
 <h1>🌹 Publish New Poem 🌹</h1>
-    
-<h2>Admin Login</h2>
 
-<input type="email" id="email" placeholder="Enter your email">
 
-<br>
 
-<input type="password" id="password" placeholder="Enter your password">
-
-<br>
-
-<button id="loginBtn">Login</button>
-   
-
-<div id="publishBox" style="display:none;">
-
+<div id="publishBox" style="display:block;">
 
 
 <label>Poem Title</label>
@@ -114,20 +102,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-    document.getElementById("loginBtn").addEventListener("click", async () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    alert("Login successful!");
-
-// Show publish form after login
-document.getElementById("publishBox").style.display = "block";
-  } catch (error) {
-    alert(error.code + "\n" + error.message);
-  }
-});
+  
 document.getElementById("publishBtn").addEventListener("click", async () => {
 
 const title = document.getElementById("title").value.trim();
