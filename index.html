@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Gy<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -255,7 +255,7 @@ querySnapshot.forEach((poemDoc) => {
         <pre>${data.poem}</pre>
       </div>
 
-      
+      <p>❤️ Likes: ${data.likes || 0}</p>
 
 
 <button onclick="editPoem('${poemDoc.id}')">
@@ -338,6 +338,21 @@ globalThis.commentPoem = function(id) {
         alert("Comment posted successfully!");
 
         document.getElementById("commentText-" + id).value = "";
+
+    } catch (error) {
+        alert(error.message);
+    }
+};
+    globalThis.likePoem = async function(id) {
+    try {
+        const poemRef = doc(db, "poems", id);
+
+        await updateDoc(poemRef, {
+            likes: increment(1)
+        });
+
+        alert("❤️ Thanks for liking this poem!");
+        location.reload();
 
     } catch (error) {
         alert(error.message);
