@@ -69,6 +69,12 @@ button{
 <br>
 
 <button id="loginBtn">Login</button>
+   
+
+<div id="publishBox" style="display:none;">
+
+
+
 <label>Poem Title</label>
 <input type="text" id="title" placeholder="Enter title">
 
@@ -78,6 +84,14 @@ button{
 <br>
 
 <button id="publishBtn">Publish</button>
+
+
+</div>
+
+
+
+
+    
 
 </div>
 <script type="module">
@@ -109,9 +123,7 @@ const auth = getAuth(app);
     alert("Login successful!");
 
 // Show publish form after login
-document.getElementById("title").style.display = "block";
-document.getElementById("poem").style.display = "block";
-document.getElementById("publishBtn").style.display = "inline-block";
+document.getElementById("publishBox").style.display = "block";
   } catch (error) {
     alert(error.code + "\n" + error.message);
   }
