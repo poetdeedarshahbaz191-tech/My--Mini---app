@@ -219,12 +219,16 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-import {
+    import {
   getFirestore,
   collection,
   getDocs,
   deleteDoc,
-  doc
+  doc,
+  addDoc,
+  updateDoc,
+  increment,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
