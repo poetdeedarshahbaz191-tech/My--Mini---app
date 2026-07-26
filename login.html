@@ -89,7 +89,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const message = document.getElementById("message");
-
+alert("Button clicked");
   try {
     await signInWithEmailAndPassword(auth, email, password);
     message.style.color = "green";
