@@ -95,11 +95,12 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     message.style.color = "green";
     message.textContent = "Login successful!";
     window.location.href = "publish.html";
-  } catch (error) {
-    message.style.color = "red";
-    message.textContent = error.message;
-  }
-});
+  
+});catch (error) {
+  alert(error.code);
+  message.style.color = "red";
+  message.textContent = error.message;
+}
 
 </script>
 
