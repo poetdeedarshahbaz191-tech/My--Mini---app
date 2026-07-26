@@ -103,12 +103,12 @@ h1{
 <h1>🌹 Poet Deedar Shahbaz 🌹</h1>
 <br>
 
-<a href="login.html">
-<button>
-🌹 Publish New Poem 🌹
-</button>
-</a>
 
+<div id="publishArea" style="display:none;">
+    <a href="publish.html">
+        <button>🌹 Publish New Poem 🌹</button>
+    </a>
+</div>
 <br><br>
     <div id="poetry"></div>
 
@@ -212,20 +212,19 @@ h1{
 
 <script type="module"> 
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  import {
+import {
   getFirestore,
   collection,
   getDocs,
-  getDoc,
   deleteDoc,
-  updateDoc,
-  doc,
-  increment,
-  addDoc,
-  serverTimestamp
+  doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
@@ -236,9 +235,10 @@ const firebaseConfig = {
   appId: "1:411582745091:web:96413eef58092e77911c36",
   measurementId: "G-E0V5QH9D98"
 };
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 const poetryBox = document.getElementById("poetry");
 
 const querySnapshot = await getDocs(collection(db, "poems"));
@@ -258,7 +258,7 @@ querySnapshot.forEach((poemDoc) => {
       <p>❤️ Likes: ${data.likes || 0}</p>
 
 
-<button onclick="editPoem('${poemDoc.id}')">
+<button class="admin-btn" onclick="editPoem('${poemDoc.id}')" style="display:none;">
     ✏ Edit
 </button>
 <button onclick="likePoem('${poemDoc.id}')">
@@ -270,10 +270,9 @@ querySnapshot.forEach((poemDoc) => {
     📤 Share
 </button>
 
-<button onclick="deletePoem('${poemDoc.id}')">
+<button class="admin-btn" onclick="deletePoem('${poemDoc.id}')" style="display:none;">
     🗑 Delete
 </button>
-
 <button onclick="commentPoem('${poemDoc.id}')">💬 Comment</button>
 
 <div id="comments-${poemDoc.id}"></div>
@@ -358,6 +357,15 @@ globalThis.commentPoem = function(id) {
         alert(error.message);
     }
 };
+    onAuthStateChanged(auth, (user) => {
+    if (user) {
+        document.getElementById("publishArea").style.display = "block";
+
+        document.querySelectorAll(".admin-btn").forEach(btn => {
+            btn.style.display = "inline-block";
+        });
+    }
+});
 </script>
 </body>
 </html>
