@@ -99,6 +99,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    aalert("Login successful!");
+
+// Show publish form after login
+document.getElementById("title").style.display = "block";
+document.getElementById("poem").style.display = "block";
+document.getElementById("publishBtn").style.display = "inline-block";
+  } catch (error) {
+    alert(error.code + "\n" + error.message);
+  }
+});
 document.getElementById("publishBtn").addEventListener("click", async () => {
 
 const title = document.getElementById("title").value.trim();
