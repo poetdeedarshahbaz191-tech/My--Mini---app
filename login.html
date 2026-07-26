@@ -96,10 +96,8 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     message.textContent = "Login successful!";
     window.location.href = "publish.html";
   
-});catch (error) {
-  alert(error.code);
-  message.style.color = "red";
-  message.textContent = error.message;
+}) catch (error) {
+  alert(error.code + "\n" + error.message);
 }
 
 </script>
