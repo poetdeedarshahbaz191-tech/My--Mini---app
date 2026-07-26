@@ -90,16 +90,20 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
   const password = document.getElementById("password").value;
   const message = document.getElementById("message");
 alert("Button clicked");
-  try {
+
+    try {
     await signInWithEmailAndPassword(auth, email, password);
+
     message.style.color = "green";
     message.textContent = "Login successful!";
+
     window.location.href = "publish.html";
-  
-}) catch (error) {
-  alert(error.code + "\n" + error.message);
+
+} catch (error) {
+    alert(error.code + "\n" + error.message);
 }
 
+});
 </script>
 
 </body>
