@@ -53,7 +53,7 @@ button{
 </head>
 
 
-<body style="display:none;" id="body">
+<body>
 <div class="container">
 
 <h1>🌹 Publish New Poem 🌹</h1>
@@ -102,20 +102,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-  async function login() {
-    const email = prompt("Enter your email:");
-    const password = prompt("Enter your password:");
-
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-        document.getElementById("body").style.display = "block";
-    } catch (error) {
-        alert("Access Denied!");
-        window.location.href = "index.html";
-    }
-}
-
-login();
+  
 document.getElementById("publishBtn").addEventListener("click", async () => {
 
 const title = document.getElementById("title").value.trim();
