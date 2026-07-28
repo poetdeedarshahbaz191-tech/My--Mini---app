@@ -116,13 +116,15 @@ h1{
 </div>
 <br><br>
 <div style="text-align:center; margin:20px;">
-    <input
-        type="text"
-        id="searchInput"
-        placeholder="🔍 Search poems..."
-        onkeyup="searchPoems()"
+    
+        <input
+type="text"
+id="searchInput"
+placeholder="🔍 Search poems..."
+onkeyup="window.searchPoems()">
+      
         
-    >
+    
 </div>
     
     <div id="poetry"></div>
@@ -388,17 +390,21 @@ globalThis.commentPoem = function(id) {
         alert(error.message);
     }
 };
-    onAuthStateChanged(auth, (user) => {
-    if (user) {
+    
+onAuthStateChanged(auth, (user) => {
+
+    if (user && user.email === "YOUR_ADMIN_EMAIL@gmail.com") {
+
         document.getElementById("publishArea").style.display = "block";
 
         document.querySelectorAll(".admin-btn").forEach(btn => {
             btn.style.display = "inline-block";
         });
-    }
-});
 
-    function searchPoems() {
+    }
+
+});
+    window.searchPoems = function() {
     let input = document.getElementById("searchInput").value.toLowerCase();
     let poems = document.getElementsByClassName("poem-card");
 
