@@ -68,8 +68,8 @@ button{
 
 <button id="loginBtn">Login</button>
 </div>
-<div <div id="publishBox" style="display:none;">
 
+<div id="publishBox" style="display:none;">
 
 <label>Poem Title</label>
 <input type="text" id="title" placeholder="Enter title">
@@ -111,9 +111,9 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
   
-document.getElementById("publishBtn").addEventListener("click", async () => {
 
-const title = document.getElementById("title").value.trim();
+
+const 
 const poem = document.getElementById("poem").value.trim();
 
 if (!title || !poem) {
@@ -131,13 +131,21 @@ try {
 
     alert("Poem Published Successfully!");
 
-    document.getElementById("title").value = "";
-    document.getElementById("poem").value = "";
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+try {
+    await signInWithEmailAndPassword(auth, email, password);
+
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("publishBox").style.display = "block";
+
+    alert("Logged in successfully!");
 
 } catch (error) {
-
-    alert("Error: " + error.message);
-
+    alert(error.message);
 }
 
 });
