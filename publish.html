@@ -28,12 +28,6 @@ h1{
     color:#8b0000;
 }
 
-label{
-    display:block;
-    margin-top:15px;
-    font-size:18px;
-}
-
 input,textarea{
     width:90%;
     padding:10px;
@@ -52,126 +46,180 @@ button{
 
 </head>
 
-
 <body>
+
 <div class="container">
 
 <h1>🌹 Publish New Poem 🌹</h1>
 
 
 <div id="loginBox">
+
 <h2>Admin Login</h2>
 
-<input type="email" id="email" placeholder="Email"><br><br>
+<input type="email" id="email" placeholder="Email">
 
-<input type="password" id="password" placeholder="Password"><br><br>
+<br><br>
+
+<input type="password" id="password" placeholder="Password">
+
+<br>
 
 <button id="loginBtn">Login</button>
+
 </div>
+
+
 
 <div id="publishBox" style="display:none;">
 
 <label>Poem Title</label>
+
 <input type="text" id="title" placeholder="Enter title">
 
+
 <label>Your Poem</label>
+
 <textarea id="poem" rows="12" placeholder="Write your poem here..."></textarea>
 
 <br>
 
 <button id="publishBtn">Publish</button>
 
+</div>
+
 
 </div>
 
 
-
-
-    
-
-</div>
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    
+
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
-  authDomain: "poet--deedar---shahbaz.firebaseapp.com",
-  projectId: "poet--deedar---shahbaz",
-  storageBucket: "poet--deedar---shahbaz.firebasestorage.app",
-  messagingSenderId: "411582745091",
-  appId: "1:411582745091:web:96413eef58092e77911c36",
-  measurementId: "G-E0V5QH9D98"
+
+apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
+
+authDomain: "poet--deedar---shahbaz.firebaseapp.com",
+
+projectId: "poet--deedar---shahbaz",
+
+storageBucket: "poet--deedar---shahbaz.firebasestorage.app",
+
+messagingSenderId: "411582745091",
+
+appId: "1:411582745091:web:96413eef58092e77911c36",
+
+measurementId: "G-E0V5QH9D98"
+
 };
+
+
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
+
 const auth = getAuth(app);
 
 
 // LOGIN
 
-document.getElementById("loginBtn").addEventListener("click", async () => {
+document.getElementById("loginBtn").addEventListener("click", async()=>{
+
 
 const email = document.getElementById("email").value;
+
 const password = document.getElementById("password").value;
 
-try {
 
-await signInWithEmailAndPassword(auth, email, password);
+try{
 
-document.getElementById("loginBox").style.display = "none";
-document.getElementById("publishBox").style.display = "block";
+
+await signInWithEmailAndPassword(auth,email,password);
+
+
+document.getElementById("loginBox").style.display="none";
+
+document.getElementById("publishBox").style.display="block";
+
 
 alert("Logged in successfully!");
 
-} catch (error) {
+
+}
+
+catch(error){
 
 alert(error.message);
 
 }
 
+
 });
 
 
-// PUBLISH
 
-document.getElementById("publishBtn").addEventListener("click", async () => {
+// PUBLISH POEM
+
+
+document.getElementById("publishBtn").addEventListener("click", async()=>{
+
 
 const title = document.getElementById("title").value.trim();
+
 const poem = document.getElementById("poem").value.trim();
 
-if (!title || !poem) {
+
+if(!title || !poem){
+
 alert("Please enter title and poem.");
+
 return;
+
 }
 
-try {
 
-await addDoc(collection(db, "poems"), {
+try{
+
+
+await addDoc(collection(db,"poems"),{
+
 title:title,
+
 poem:poem,
+
 date:serverTimestamp()
+
 });
+
 
 alert("Poem Published Successfully!");
 
+
 document.getElementById("title").value="";
+
 document.getElementById("poem").value="";
 
 
-
- 
-
-} catch (error) {
-    alert(error.message);
 }
+
+catch(error){
+
+alert(error.message);
+
+}
+
 
 });
 
+
 </script>
+
 
 </body>
 </html>
-
