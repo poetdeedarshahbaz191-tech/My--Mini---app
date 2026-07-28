@@ -391,9 +391,10 @@ globalThis.commentPoem = function(id) {
     }
 };
     
+
 onAuthStateChanged(auth, (user) => {
 
-    if (user && user.email === "YOUR_ADMIN_EMAIL@gmail.com") {
+    if (user && user.email === "poetdeedarshahbaz_quambrani@gmail.com") {
 
         document.getElementById("publishArea").style.display = "block";
 
@@ -404,6 +405,7 @@ onAuthStateChanged(auth, (user) => {
     }
 
 });
+               
     window.searchPoems = function() {
     let input = document.getElementById("searchInput").value.toLowerCase();
     let poems = document.getElementsByClassName("poem-card");
