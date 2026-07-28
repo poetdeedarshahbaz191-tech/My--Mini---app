@@ -246,18 +246,14 @@ const db = getFirestore(app);
 const poetryBox = document.getElementById("poetry");
 
 
-    try {
-    const querySnapshot = await getDocs(collection(db, "poems"));
+   let querySnapshot;
+
+try {
+    querySnapshot = await getDocs(collection(db, "poems"));
 
     console.log("Poems found:", querySnapshot.size);
 
-    querySnapshot.forEach((poemDoc) => {
-        const data = poemDoc.data();
-
-        poetryBox.innerHTML += `
-            <!-- your existing poem card HTML stays here -->
-        `;
-    });
+   
 
 } catch (error) {
     console.error(error);
