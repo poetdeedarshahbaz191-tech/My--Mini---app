@@ -160,50 +160,9 @@ alert("Poem Published Successfully!");
 document.getElementById("title").value="";
 document.getElementById("poem").value="";
 
-} catch(error){
-
-alert(error.message);
-
-}
-
-});
-co
-const db = getFirestore(app);
-const auth = getAuth(app);
-
-  
 
 
-const 
-const poem = document.getElementById("poem").value.trim();
-
-if (!title || !poem) {
-    alert("Please enter title and poem.");
-    return;
-}
-
-try {
-
-    await addDoc(collection(db, "poems"), {
-        title: title,
-        poem: poem,
-      date: serverTimestamp()
-    });
-
-    alert("Poem Published Successfully!");
-
-    document.getElementById("loginBtn").addEventListener("click", async () => {
-
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-
-try {
-    await signInWithEmailAndPassword(auth, email, password);
-
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("publishBox").style.display = "block";
-
-    alert("Logged in successfully!");
+ 
 
 } catch (error) {
     alert(error.message);
