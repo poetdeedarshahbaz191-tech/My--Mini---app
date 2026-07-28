@@ -105,8 +105,69 @@ const firebaseConfig = {
   appId: "1:411582745091:web:96413eef58092e77911c36",
   measurementId: "G-E0V5QH9D98"
 };
-
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+
+// LOGIN
+
+document.getElementById("loginBtn").addEventListener("click", async () => {
+
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+try {
+
+await signInWithEmailAndPassword(auth, email, password);
+
+document.getElementById("loginBox").style.display = "none";
+document.getElementById("publishBox").style.display = "block";
+
+alert("Logged in successfully!");
+
+} catch (error) {
+
+alert(error.message);
+
+}
+
+});
+
+
+// PUBLISH
+
+document.getElementById("publishBtn").addEventListener("click", async () => {
+
+const title = document.getElementById("title").value.trim();
+const poem = document.getElementById("poem").value.trim();
+
+if (!title || !poem) {
+alert("Please enter title and poem.");
+return;
+}
+
+try {
+
+await addDoc(collection(db, "poems"), {
+title:title,
+poem:poem,
+date:serverTimestamp()
+});
+
+alert("Poem Published Successfully!");
+
+document.getElementById("title").value="";
+document.getElementById("poem").value="";
+
+} catch(error){
+
+alert(error.message);
+
+}
+
+});
+co
 const db = getFirestore(app);
 const auth = getAuth(app);
 
