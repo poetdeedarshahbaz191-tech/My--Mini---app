@@ -89,10 +89,13 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const message = document.getElementById("message");
-alert("Button clicked");
+alert("1");
 
-    try {
-    await signInWithEmailAndPassword(auth, email, password);
+try {
+    alert("2");
+    alert("3");
+await signInWithEmailAndPassword(auth, email, password);
+alert("4");
 
     message.style.color = "green";
     message.textContent = "Login successful!";
