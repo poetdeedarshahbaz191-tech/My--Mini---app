@@ -291,7 +291,7 @@ querySnapshot.forEach((poemDoc) => {
       <p>❤️ Likes: ${data.likes || 0}</p>
 
 
-<button class="admin-btn" onclick="editPoem('${poemDoc.id}')" style="display:none;">
+<button class="admin-btn" onclick="editPoem('${poemDoc.id}')" ${auth.currentUser?.email === "poetdeedarshahbaz_quambrani@gmail.com" ? "" : 'style="display:none;"'}>
     ✏ Edit
 </button>
 <button onclick="likePoem('${poemDoc.id}')">
