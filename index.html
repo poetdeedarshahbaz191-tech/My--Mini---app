@@ -399,9 +399,7 @@ globalThis.commentPoem = function(id) {
     
 
 
-         onAuthStateChanged(auth, (user) => {
-
-    console.log(user);
+           onAuthStateChanged(auth, (user) => {
 
     if (user) {
         alert("Logged in: " + user.email);
@@ -413,13 +411,11 @@ globalThis.commentPoem = function(id) {
 
         document.getElementById("publishArea").style.display = "block";
 
-        document.querySelectorAll(".admin-btn").forEach(btn => {
-            btn.style.display = "inline-block";
-        });
-
     }
 
-});      
+    loadPoems();
+
+});
     window.searchPoems = function() {
     let input = document.getElementById("searchInput").value.toLowerCase();
     let poems = document.getElementsByClassName("poem-card");
