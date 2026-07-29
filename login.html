@@ -99,11 +99,11 @@ alert("Button clicked");
 
     window.location.href = "publish.html";
 
-} catch (error) {
-    alert(error.code + "\n" + error.message);
+    } catch (error) {
+    console.log(error);
+    alert(error.code);
+    alert(error.message);
 }
-
-});
 </script>
 
 </body>
