@@ -8,7 +8,9 @@ Gy<!DOCTYPE html>
 <title>Poet Deedar Shahbaz</title>
 
 <style>
-
+.admin-btn{
+    display:none;
+}
     
 
     body{
@@ -398,24 +400,32 @@ globalThis.commentPoem = function(id) {
 };
     
 
+onAuthStateChanged(auth, (user) => {
 
-           onAuthStateChanged(auth, (user) => {
-
-    if (user) {
-        alert("Logged in: " + user.email);
-    } else {
-        alert("Not logged in");
-    }
+    const adminButtons = document.querySelectorAll(".admin-btn");
 
     if (user && user.email === "poetdeedarshahbaz_quambrani@gmail.com") {
 
         document.getElementById("publishArea").style.display = "block";
+
+        adminButtons.forEach(btn => {
+            btn.style.display = "inline-block";
+        });
+
+    } else {
+
+        document.getElementById("publishArea").style.display = "none";
+
+        adminButtons.forEach(btn => {
+            btn.style.display = "none";
+        });
 
     }
 
     loadPoems();
 
 });
+           
     window.searchPoems = function() {
     let input = document.getElementById("searchInput").value.toLowerCase();
     let poems = document.getElementsByClassName("poem-card");
