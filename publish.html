@@ -179,19 +179,19 @@ return;
 }
 
 
-try{
 
+try {
 
-await addDoc(collection(db,"poems"),{
+    console.log(auth.currentUser);
+    alert(auth.currentUser ? auth.currentUser.email : "Not logged in");
 
-title:title,
+    await addDoc(collection(db,"poems"),{
 
-poem:poem,
+        title: title,
+        poem: poem,
+        date: serverTimestamp()
 
-date:serverTimestamp()
-
-});
-
+    });
 
 alert("Poem Published Successfully!");
 
