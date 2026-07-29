@@ -139,17 +139,12 @@ const password = document.getElementById("password").value;
 
 try{
 
-
 await signInWithEmailAndPassword(auth,email,password);
 
-
 document.getElementById("loginBox").style.display="none";
-
 document.getElementById("publishBox").style.display="block";
 
-
 alert("Logged in successfully!");
-
 
 }
 
