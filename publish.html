@@ -145,24 +145,29 @@ onAuthStateChanged(auth, (user) => {
     }
 
 });
-// LOGIN
+
+    // LOGIN
 
 document.getElementById("loginBtn").addEventListener("click", async()=>{
 
-
 const email = document.getElementById("email").value;
-
 const password = document.getElementById("password").value;
-
 
 try{
 
 const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
 if (userCredential.user.email === "poetdeedarshahbaz_quambrani@gmail.com") {
+
     alert("Logged in successfully!");
+
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("publishBox").style.display = "block";
+
 } else {
+
     alert("Not authorized.");
+
 }
 
 }
@@ -175,6 +180,7 @@ alert(error.message);
 
 
 });
+
 
 
 
