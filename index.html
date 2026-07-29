@@ -263,55 +263,61 @@ const db = getFirestore(app);
 const poetryBox = document.getElementById("poetry");
 
 
-   let querySnapshot;
+   async function loadPoems(){
+
+let querySnapshot;
 
 try {
     querySnapshot = await getDocs(collection(db, "poems"));
 
     console.log("Poems found:", querySnapshot.size);
 
-   
-
 } catch (error) {
     console.error(error);
     alert("Error loading poems: " + error.message);
+    return;
 }
-console.log("Poems found:", querySnapshot.size);
+
 querySnapshot.forEach((poemDoc) => {
-  const data = poemDoc.data();
+const data = poemDoc.data();
 
-  poetryBox.innerHTML += `
-    <div class="poem-card">
-      <h2 class="poem-title">${data.title}</h2>
+poetryBox.innerHTML += `
+<div class="poem-card">
 
-      <div class="poem-text">
-        <pre>${data.poem}</pre>
-      </div>
+<h2 class="poem-title">${data.title}</h2>
 
-      <p>❤️ Likes: ${data.likes || 0}</p>
+<div class="poem-text">
+<pre>${data.poem}</pre>
+</div>
 
+<p>❤️ Likes: ${data.likes || 0}</p>
 
-<button class="admin-btn" onclick="editPoem('${poemDoc.id}')" ${auth.currentUser?.email === "poetdeedarshahbaz_quambrani@gmail.com" ? "" : 'style="display:none;"'}>
-    ✏ Edit
+<button class="admin-btn" onclick="editPoem('${poemDoc.id}')">
+✏ Edit
 </button>
+
 <button onclick="likePoem('${poemDoc.id}')">
-    ❤️ Like
+❤️ Like
 </button>
-
 
 <button onclick="sharePoem('${poemDoc.id}')">
-    📤 Share
+📤 Share
 </button>
 
-<button class="admin-btn" onclick="deletePoem('${poemDoc.id}')" ${auth.currentUser?.email === "poetdeedarshahbaz_quambrani@gmail.com" ? "" : 'style="display:none;"'}>
-    🗑 Delete
+<button class="admin-btn" onclick="deletePoem('${poemDoc.id}')">
+🗑 Delete
 </button>
-<button onclick="commentPoem('${poemDoc.id}')">💬 Comment</button>
 
-<div id="comments-${poemDoc.id}"></div>
-    </div>
-  `;
+<button onclick="commentPoem('${poemDoc.id}')">
+💬 Comment
+</button>
+
+</div>
+`;
+
 });
+
+}
 
  globalThis.deletePoem = async function(id){
 
