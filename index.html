@@ -303,7 +303,7 @@ querySnapshot.forEach((poemDoc) => {
     📤 Share
 </button>
 
-<button class="admin-btn" onclick="deletePoem('${poemDoc.id}')" style="display:none;">
+<button class="admin-btn" onclick="deletePoem('${poemDoc.id}')" ${auth.currentUser?.email === "poetdeedarshahbaz_quambrani@gmail.com" ? "" : 'style="display:none;"'}>
     🗑 Delete
 </button>
 <button onclick="commentPoem('${poemDoc.id}')">💬 Comment</button>
