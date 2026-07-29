@@ -94,9 +94,10 @@ alert("1");
 try {
     alert("2");
     alert("3");
-await signInWithEmailAndPassword(auth, email, password);
-alert("4");
 
+console.log("Before login");
+await signInWithEmailAndPassword(auth, email, password);
+console.log("After login");
     message.style.color = "green";
     message.textContent = "Login successful!";
 
