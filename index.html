@@ -294,24 +294,20 @@ poetryBox.innerHTML += `
 
 <p>❤️ Likes: ${data.likes || 0}</p>
 
-<button class="admin-btn" onclick="editPoem('${poemDoc.id}')">
-✏ Edit
-</button>
-
-<button onclick="likePoem('${poemDoc.id}')">
-❤️ Like
+button onclick="likePoem('${poemDoc.id}')">
+    ❤️ Like
 </button>
 
 <button onclick="sharePoem('${poemDoc.id}')">
-📤 Share
+    📤 Share
 </button>
 
-<button class="admin-btn" onclick="deletePoem('${poemDoc.id}')">
-🗑 Delete
+<button class="admin-btn" style="display:none;" onclick="deletePoem('${poemDoc.id}')">
+    🗑 Delete
 </button>
 
 <button onclick="commentPoem('${poemDoc.id}')">
-💬 Comment
+    💬 Comment
 </button>
 
 </div>
