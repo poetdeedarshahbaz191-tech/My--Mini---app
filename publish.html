@@ -65,7 +65,7 @@ button{
 
 <br>
 
-<button id="loginBtn" onclick="alert('Button clicked')">Login</button>
+<button id="loginBtn">Login</button>
 
 </div>
 
@@ -104,7 +104,13 @@ import {
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
+    
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
 
 apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
@@ -133,7 +139,7 @@ const db = getFirestore(app);
 console.log("Current user:", auth.currentUser);
 onAuthStateChanged(auth, (user) => {
 
-if (user && user.email === "poetshahbaz_quambrani@gmail.com") {
+if (user) {
         document.getElementById("loginBox").style.display = "none";
         document.getElementById("publishBox").style.display = "block";
 
