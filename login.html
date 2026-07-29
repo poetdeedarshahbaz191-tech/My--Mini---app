@@ -96,7 +96,8 @@ try {
     alert("3");
 
 console.log("Before login");
-await signInWithEmailAndPassword(auth, email, password);
+const result = await signInWithEmailAndPassword(auth, email, password);
+alert(result.user.uid);
 console.log("After login");
     message.style.color = "green";
     message.textContent = "Login successful!";
