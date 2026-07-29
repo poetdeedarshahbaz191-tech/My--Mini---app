@@ -392,22 +392,28 @@ globalThis.commentPoem = function(id) {
 };
     
 
-onAuthStateChanged(auth, (user) => {
+
+         onAuthStateChanged(auth, (user) => {
+
+    console.log(user);
+
+    if (user) {
+        alert("Logged in: " + user.email);
+    } else {
+        alert("Not logged in");
+    }
 
     if (user && user.email === "poetdeedarshahbaz_quambrani@gmail.com") {
 
         document.getElementById("publishArea").style.display = "block";
 
-        
-setTimeout(() => {
-    document.querySelectorAll(".admin-btn").forEach(btn => {
-        btn.style.display = "inline-block";
-    });
-}, 500);
+        document.querySelectorAll(".admin-btn").forEach(btn => {
+            btn.style.display = "inline-block";
+        });
+
     }
 
-});
-               
+});      
     window.searchPoems = function() {
     let input = document.getElementById("searchInput").value.toLowerCase();
     let poems = document.getElementsByClassName("poem-card");
