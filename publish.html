@@ -129,16 +129,22 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const auth = getAuth(app);
+
 onAuthStateChanged(auth, (user) => {
-    if (user) {
+
+    if (user && user.email === "poetdeedarshahbaz_quambrani@gmail.com") {
+
         document.getElementById("loginBox").style.display = "none";
         document.getElementById("publishBox").style.display = "block";
+
     } else {
+
         document.getElementById("loginBox").style.display = "block";
         document.getElementById("publishBox").style.display = "none";
-    }
-});
 
+    }
+
+});
 // LOGIN
 
 document.getElementById("loginBtn").addEventListener("click", async()=>{
@@ -151,12 +157,13 @@ const password = document.getElementById("password").value;
 
 try{
 
-await signInWithEmailAndPassword(auth,email,password);
+const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-document.getElementById("loginBox").style.display="none";
-document.getElementById("publishBox").style.display="block";
-
-alert("Logged in successfully!");
+if (userCredential.user.email === "poetdeedarshahbaz_quambrani@gmail.com") {
+    alert("Logged in successfully!");
+} else {
+    alert("Not authorized.");
+}
 
 }
 
