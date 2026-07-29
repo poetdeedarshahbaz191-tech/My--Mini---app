@@ -128,8 +128,8 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-const auth = getAuth(app);
 
+console.log("Current user:", auth.currentUser);
 onAuthStateChanged(auth, (user) => {
 
 if (user && user.email === "poetshahbaz_quambrani@gmail.com") {
