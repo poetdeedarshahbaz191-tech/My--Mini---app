@@ -398,10 +398,12 @@ onAuthStateChanged(auth, (user) => {
 
         document.getElementById("publishArea").style.display = "block";
 
-        document.querySelectorAll(".admin-btn").forEach(btn => {
-            btn.style.display = "inline-block";
-        });
-
+        
+setTimeout(() => {
+    document.querySelectorAll(".admin-btn").forEach(btn => {
+        btn.style.display = "inline-block";
+    });
+}, 500);
     }
 
 });
