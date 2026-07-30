@@ -302,13 +302,20 @@ poetryBox.innerHTML += `
     📤 Share
 </button>
 
-<button class="admin-btn" style="display:none;" onclick="deletePoem('${poemDoc.id}')">
-    🗑 Delete
-</button>
 
 <button onclick="commentPoem('${poemDoc.id}')">
     💬 Comment
 </button>
+
+<button class="admin-btn" style="display:none;" onclick="editPoem('${poemDoc.id}')">
+    ✏️ Edit
+</button>
+
+<button class="admin-btn" style="display:none;" onclick="deletePoem('${poemDoc.id}')">
+    🗑 Delete
+</button>
+
+
 
 </div>
 `;
