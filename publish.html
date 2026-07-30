@@ -85,7 +85,8 @@ button{
 <br>
 
 <button id="publishBtn">Publish</button>
-
+<button id="logoutBtn">Logout</button>
+    
 </div>
 
 
@@ -241,7 +242,10 @@ alert(error.message);
 
 
 });
-
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await signOut(auth);
+    alert("Logged out successfully");
+});
 
 </script>
 
