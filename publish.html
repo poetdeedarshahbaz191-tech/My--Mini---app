@@ -178,8 +178,9 @@ await signOut(auth);
 }
 
 } catch (error) {
-    console.log(error);
-    alert(error.code + "\n" + error.message);
+    console.log("Error code:", error.code);
+    console.log("Error message:", error.message);
+    alert(error.code);
 }
 
  });          
