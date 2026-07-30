@@ -403,29 +403,21 @@ globalThis.commentPoem = function(id) {
 };
     
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
 
-    const adminButtons = document.querySelectorAll(".admin-btn");
-
-    
-if (user && user.email === "poetshahbaz_quambrani@gmail.com") {
+    if (user && user.email === "poetshahbaz_quambrani@gmail.com") {
         document.getElementById("publishArea").style.display = "block";
-
-        adminButtons.forEach(btn => {
-            btn.style.display = "inline-block";
-        });
-
     } else {
-
         document.getElementById("publishArea").style.display = "none";
-
-        adminButtons.forEach(btn => {
-            btn.style.display = "none";
-        });
-
     }
 
-    loadPoems();
+    await loadPoems();
+
+    if (user && user.email === "poetshahbaz_quambrani@gmail.com") {
+        document.querySelectorAll(".admin-btn").forEach(btn => {
+            btn.style.display = "inline-block";
+        });
+    }
 
 });
            
