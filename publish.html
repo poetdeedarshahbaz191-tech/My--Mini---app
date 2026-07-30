@@ -167,7 +167,8 @@ const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
 if (userCredential.user.email === "poetshahbaz_quambrani@gmail.com") {
 
-alert("Logged in successfully!");
+    alert("Logged in successfully!");
+    window.location.reload();
 
 } else {
 
