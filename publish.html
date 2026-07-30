@@ -133,7 +133,8 @@ measurementId: "G-E0V5QH9D98"
 
 const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    auth.useDeviceLanguage();
+signOut(auth);
+auth.useDeviceLanguage();
 
 const db = getFirestore(app);
 
