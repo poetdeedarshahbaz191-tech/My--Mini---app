@@ -165,10 +165,9 @@ try{
 
 const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-if (userCredential.user.email === "poetshahbaz_quambrani@gmail.com") {
 
+if (userCredential.user.email.toLowerCase().trim() === "poetshahbaz_quambrani@gmail.com") {
     alert("Logged in successfully!");
-    window.location.reload();
 
 } else {
 
@@ -183,14 +182,37 @@ await signOut(auth);
     alert(error.code + "\n" + error.message);
 }
 
-           
+ });          
 document.getElementById("logoutBtn").addEventListener("click", async () => {
     await signOut(auth);
     alert("Logged out successfully");
 });
 
+    document.getElementById("publishBtn").addEventListener("click", async () => {
+    const title = document.getElementById("title").value;
+    const poem = document.getElementById("poem").value;
+
+    if (!title || !poem) {
+        alert("Please enter both title and poem.");
+        return;
+    }
+
+    try {
+        await addDoc(collection(db, "poems"), {
+            title,
+            poem,
+            createdAt: serverTimestamp()
+        });
+
+        alert("Published successfully!");
+        document.getElementById("title").value = "";
+        document.getElementById("poem").value = "";
+
+    } catch (error) {
+        alert(error.message);
+    }
+});
+
 </script>
-
-
 </body>
 </html>
