@@ -165,7 +165,7 @@ try{
 
 const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
- if (userCredential.user.email === "poetshahbaz_quambrani@gmail.com") {
+if (userCredential.user.email === "poetshahbaz_quambrani@gmail.com") {
 
 alert("Logged in successfully!");
 
@@ -177,68 +177,11 @@ await signOut(auth);
 
 }
 
-catch(error){
+} catch(error){
 
 alert(error.message);
 
 }
-
-
-});
-
-
-
-
-// PUBLISH POEM
-
-
-document.getElementById("publishBtn").addEventListener("click", async()=>{
-
-
-const title = document.getElementById("title").value.trim();
-
-const poem = document.getElementById("poem").value.trim();
-
-
-if(!title || !poem){
-
-alert("Please enter title and poem.");
-
-return;
-
-}
-
-
-
-try {
-
-    console.log(auth.currentUser);
-    alert(auth.currentUser ? auth.currentUser.email : "Not logged in");
-
-    await addDoc(collection(db,"poems"),{
-
-        title: title,
-        poem: poem,
-        date: serverTimestamp()
-
-    });
-
-alert("Poem Published Successfully!");
-
-
-document.getElementById("title").value="";
-
-document.getElementById("poem").value="";
-
-
-}
-
-catch(error){
-
-alert(error.message);
-
-}
-
 
 });
 document.getElementById("logoutBtn").addEventListener("click", async () => {
