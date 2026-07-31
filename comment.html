@@ -100,22 +100,21 @@ return;
 }
 
 
-await addDoc(collection(db,"Comments"),{
 
-text:text,
-time:serverTimestamp()
+try {
 
-});
+  await addDoc(collection(db,"comments"), {
+    text: text,
+    time: serverTimestamp()
+  });
 
+  alert("Comment posted!");
+  document.getElementById("commentText").value = "";
+  loadComments();
 
-alert("Comment posted!");
-
-document.getElementById("commentText").value="";
-
-loadComments();
-
-};
-
+} catch (error) {
+  alert(error.message);
+}
 
 
 async function loadComments(){
@@ -125,8 +124,8 @@ const list = document.getElementById("commentsList");
 list.innerHTML="";
 
 
-const snapshot = await getDocs(collection(db,"Comments"));
 
+const snapshot = await getDocs(collection(db,"comments"));
 
 snapshot.forEach((doc)=>{
 
