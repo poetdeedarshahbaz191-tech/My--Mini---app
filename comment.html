@@ -132,10 +132,18 @@ window.addComment = async function () {
   }
 
   try {
-    await addDoc(collection(db, "comments"), {
-      text: text,
-      time: serverTimestamp()
-    });
+    const name = prompt("Enter your name:");
+
+if (!name) {
+  alert("Please enter your name.");
+  return;
+}
+
+await addDoc(collection(db, "comments"), {
+  name: name,
+  text: text,
+  time: serverTimestamp()
+});
 
     document.getElementById("commentText").value = "";
     loadComments();
