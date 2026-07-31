@@ -1,5 +1,6 @@
 
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -46,6 +47,7 @@ button{
 </style>
 
 </head>
+
 <body>
 
 <h2>Comments</h2>
@@ -58,25 +60,102 @@ button{
 
 <div id="commentsList"></div>
 
-<script>
-function addComment(){
 
-    const text=document.getElementById("commentText").value.trim();
+<script type="module">
 
-    if(text===""){
-        alert("Please write a comment.");
-        return;
-    }
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    const div=document.createElement("div");
-    div.className="comment";
-    div.textContent=text;
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    document.getElementById("commentsList").prepend(div);
 
-    document.getElementById("commentText").value="";
+const firebaseConfig = {
+  apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
+  authDomain: "poet--deedar---shahbaz.firebaseapp.com",
+  projectId: "poet--deedar---shahbaz",
+  storageBucket: "poet--deedar---shahbaz.firebasestorage.app",
+  messagingSenderId: "411582745091",
+  appId: "1:411582745091:web:96413eef58092e77911c36"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+
+window.addComment = async function(){
+
+const text = document.getElementById("commentText").value.trim();
+
+if(text === ""){
+alert("Please write your comment.");
+return;
 }
+
+
+await addDoc(collection(db,"Comments"),{
+
+text:text,
+time:serverTimestamp()
+
+});
+
+
+alert("Comment posted!");
+
+document.getElementById("commentText").value="";
+
+loadComments();
+
+};
+
+
+
+async function loadComments(){
+
+const list = document.getElementById("commentsList");
+
+list.innerHTML="";
+
+
+const snapshot = await getDocs(collection(db,"Comments"));
+
+
+snapshot.forEach((doc)=>{
+
+const data = doc.data();
+
+
+const div = document.createElement("div");
+
+div.className="comment";
+
+div.textContent = data.text;
+
+
+list.appendChild(div);
+
+
+});
+
+
+}
+
+
+loadComments();
+
+
 </script>
 
 </body>
 </html>
+
+
+
