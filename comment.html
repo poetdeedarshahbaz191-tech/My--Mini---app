@@ -1,11 +1,8 @@
-
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Comments</title>
 
 <style>
@@ -47,7 +44,6 @@ button{
 </style>
 
 </head>
-
 <body>
 
 <h2>Comments</h2>
@@ -60,19 +56,17 @@ button{
 
 <div id="commentsList"></div>
 
-
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-serverTimestamp
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
@@ -83,71 +77,47 @@ const firebaseConfig = {
   appId: "1:411582745091:web:96413eef58092e77911c36"
 };
 
-
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
+    async function loadComments() {
+  const list = document.getElementById("commentsList");
+  list.innerHTML = "";
 
+  const snapshot = await getDocs(collection(db, "comments"));
 
-window.addComment = async function(){
+  snapshot.forEach((doc) => {
+    const data = doc.data();
 
-const text = document.getElementById("commentText").value.trim();
+    const div = document.createElement("div");
+    div.className = "comment";
+    div.textContent = data.text;
 
-if(text === ""){
-alert("Please write your comment.");
-return;
-}
-
-
-
-try {
-
-  await addDoc(collection(db,"comments"), {
-    text: text,
-    time: serverTimestamp()
+    list.appendChild(div);
   });
-
-  alert("Comment posted!");
-  document.getElementById("commentText").value = "";
-  loadComments();
-
-} catch (error) {
-  alert(error.message);
 }
 
+window.addComment = async function () {
+  const text = document.getElementById("commentText").value.trim();
 
-async function loadComments(){
+  if (text === "") {
+    alert("Please write your comment.");
+    return;
+  }
 
-const list = document.getElementById("commentsList");
+  try {
+    await addDoc(collection(db, "comments"), {
+      text: text,
+      time: serverTimestamp()
+    });
 
-list.innerHTML="";
-
-
-
-const snapshot = await getDocs(collection(db,"comments"));
-
-snapshot.forEach((doc)=>{
-
-const data = doc.data();
-
-
-const div = document.createElement("div");
-
-div.className="comment";
-
-div.textContent = data.text;
-
-
-list.appendChild(div);
-
-
-});
-
-
-}
-
-} // End addComment()
+    document.getElementById("commentText").value = "";
+    loadComments();
+    alert("Comment posted!");
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
 loadComments();
 
@@ -155,6 +125,3 @@ loadComments();
 
 </body>
 </html>
-
-
-
