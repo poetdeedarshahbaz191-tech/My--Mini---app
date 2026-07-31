@@ -87,6 +87,18 @@ const db = getFirestore(app);
   const snapshot = await getDocs(collection(db, "comments"));
 
   snapshot.forEach((doc) => {
+  const data = doc.data();
+
+  const div = document.createElement("div");
+  div.className = "comment";
+
+  div.innerHTML = `
+    <p>${data.text}</p>
+    <button onclick="deleteComment('${doc.id}')">Delete</button>
+  `;
+
+  list.appendChild(div);
+});
     const data = doc.data();
 
     const div = document.createElement("div");
