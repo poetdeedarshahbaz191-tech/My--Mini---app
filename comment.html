@@ -108,7 +108,9 @@ async function loadComments() {
       div.innerHTML = `
   <strong>${data.name || "Anonymous"}</strong>
   <p>${data.text}</p>
-  ${isAdmin ? `<button data-id="${commentDoc.id}">Delete</button>` : ""}
+  <button class="replyBtn">Reply</button>
+${isAdmin ? `<button data-id="${commentDoc.id}">Delete</button>` : ""}
+<div class="replyBox"></div>
 `;
 
     const deleteBtn = div.querySelector("button");
