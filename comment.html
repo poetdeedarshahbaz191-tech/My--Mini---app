@@ -57,14 +57,14 @@ button{
 <div id="commentsList"></div>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
 import {
   getFirestore,
   collection,
   addDoc,
   getDocs,
+  deleteDoc,
+  doc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -80,30 +80,27 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-    async function loadComments() {
+async function loadComments() {
   const list = document.getElementById("commentsList");
   list.innerHTML = "";
 
   const snapshot = await getDocs(collection(db, "comments"));
 
-  snapshot.forEach((doc) => {
-  const data = doc.data();
-
-  const div = document.createElement("div");
-  div.className = "comment";
-
-  div.innerHTML = `
-    <p>${data.text}</p>
-    <button onclick="deleteComment('${doc.id}')">Delete</button>
-  `;
-
-  list.appendChild(div);
-});
-    const data = doc.data();
+  snapshot.forEach((commentDoc) => {
+    const data = commentDoc.data();
 
     const div = document.createElement("div");
     div.className = "comment";
-    div.textContent = data.text;
+
+    div.innerHTML = `
+      <p>${data.text}</p>
+      <button data-id="${commentDoc.id}">Delete</button>
+    `;
+
+    div.querySelector("button").onclick = async () => {
+      await deleteDoc(doc(db, "comments", commentDoc.id));
+      loadComments();
+    };
 
     list.appendChild(div);
   });
@@ -112,7 +109,7 @@ const db = getFirestore(app);
 window.addComment = async function () {
   const text = document.getElementById("commentText").value.trim();
 
-  if (text === "") {
+  if (!text) {
     alert("Please write your comment.");
     return;
   }
@@ -132,7 +129,6 @@ window.addComment = async function () {
 };
 
 loadComments();
-
 </script>
 
 </body>
