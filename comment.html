@@ -116,10 +116,15 @@ ${isAdmin ? `<button data-id="${commentDoc.id}">Delete</button>` : ""}
     const deleteBtn = div.querySelector('button[data-id]');
 
 if (deleteBtn) {
-  deleteBtn.onclick = async () => {
-    await deleteDoc(doc(db, "comments", commentDoc.id));
-    loadComments();
-  };
+  deleteBtn.addEventListener("click", async () => {
+    try {
+      await deleteDoc(doc(db, "comments", commentDoc.id));
+      loadComments();
+    } catch (error) {
+      alert(error.message);
+      console.log(error);
+    }
+  });
 }
 
       const replyBtn = div.querySelector(".replyBtn");
