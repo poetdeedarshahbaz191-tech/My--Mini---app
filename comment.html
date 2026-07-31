@@ -113,7 +113,7 @@ ${isAdmin ? `<button data-id="${commentDoc.id}">Delete</button>` : ""}
 <div class="replyBox"></div>
 `;
 
-    const deleteBtn = div.querySelector("button");
+    const deleteBtn = div.querySelector('button[data-id]');
 
 if (deleteBtn) {
   deleteBtn.onclick = async () => {
@@ -122,6 +122,16 @@ if (deleteBtn) {
   };
 }
 
+      const replyBtn = div.querySelector(".replyBtn");
+const replyBox = div.querySelector(".replyBox");
+
+replyBtn.onclick = () => {
+  const reply = prompt("Write your reply:");
+
+  if (reply) {
+    replyBox.innerHTML = `<b>Reply:</b> ${reply}`;
+  }
+};
     list.appendChild(div);
   });
 }
