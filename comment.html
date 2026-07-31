@@ -104,11 +104,12 @@ async function loadComments() {
     const div = document.createElement("div");
     div.className = "comment";
 
-    div.innerHTML = `
+    
+      div.innerHTML = `
+  <strong>${data.name || "Anonymous"}</strong>
   <p>${data.text}</p>
   ${isAdmin ? `<button data-id="${commentDoc.id}">Delete</button>` : ""}
 `;
-      
 
     const deleteBtn = div.querySelector("button");
 
