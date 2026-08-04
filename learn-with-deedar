@@ -17,14 +17,14 @@
     </div>
 
     <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Courses</a>
-        <a href="#">Contact</a>
-    </nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#courses">Courses</a>
+    <a href="#trial">Contact</a>
+</nav>
 </header>
 
-<section class="hero">
+<section id="home" class="hero">
     <div class="hero-content">
 
         <h1>Online English Tuition</h1>
@@ -41,7 +41,7 @@
 
     </div>
 </section>
-<section class="about">
+<section id="about" class="about">
     <h2>About Your Teacher</h2>
     <p>
         I am Deedar Quambrani, an experienced English teacher.
@@ -51,7 +51,7 @@
 </section>
 
 
-<section class="courses">
+<section id="courses" class="courses">
     <h2>My Courses</h2>
 
     <div class="course-card">
@@ -70,7 +70,28 @@
     </div>
 
 </section>
-<script src="script.js"></script>
 
+<section id="trial" class="trial">
+    <h2>Book Your Free Trial Class</h2>
+
+    <form>
+        <input type="text" placeholder="Your Name" required><br><br>
+
+        <input type="email" placeholder="Your Email" required><br><br>
+
+        <input type="tel" placeholder="WhatsApp Number" required><br><br>
+
+        <button type="submit" class="btn">
+            Book Now
+        </button>
+    </form>
+</section>
+
+<footer class="footer">
+    <p>© 2026 Learn with Deedar Quambrani. All Rights Reserved.</p>
+    <p>Email: shahbazdeedar555@gmail.com</p>
+    <p>WhatsApp: +92 307 3223367</p>
+</footer>
+<script src="script.js"></script>
 </body>
 </html>
