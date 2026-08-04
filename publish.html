@@ -206,7 +206,7 @@ await addDoc(collection(db, "poems"), {
     title,
     poem,
     likes: 0,
-    time: serverTimestamp()
+    createdAt: serverTimestamp()
 });
         alert("Published successfully!");
         document.getElementById("title").value = "";
