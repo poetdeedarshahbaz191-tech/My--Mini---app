@@ -74,12 +74,14 @@
 <section id="trial" class="trial">
     <h2>Book Your Free Trial Class</h2>
 
-    <form>
-        <input type="text" placeholder="Your Name" required><br><br>
+    <form id="trialForm">
+        
+          
+<input type="text" name="name" placeholder="Your Name" required>
 
-        <input type="email" placeholder="Your Email" required><br><br>
+<input type="email" name="email" placeholder="Your Email" required>
 
-        <input type="tel" placeholder="WhatsApp Number" required><br><br>
+<input type="tel" name="phone" placeholder="WhatsApp Number" required>    <br><br>
 
         <button type="submit" class="btn">
             Book Now
