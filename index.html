@@ -187,9 +187,7 @@ let querySnapshot;
 
 try {
     
-querySnapshot = await getDocs(
-    query(collection(db, "poems"), orderBy("time", "desc"))
-);
+querySnapshot = await getDocs(collection(db, "poems"));
     console.log("Poems found:", querySnapshot.size);
 
 } catch (error) {
