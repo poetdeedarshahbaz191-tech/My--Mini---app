@@ -151,10 +151,12 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    import {
+   import {
   getFirestore,
   collection,
   getDocs,
+  query,
+  orderBy,
   deleteDoc,
   doc,
   addDoc,
@@ -162,6 +164,7 @@ import {
   increment,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
   authDomain: "poet--deedar---shahbaz.firebaseapp.com",
@@ -183,8 +186,10 @@ const poetryBox = document.getElementById("poetry");
 let querySnapshot;
 
 try {
-    querySnapshot = await getDocs(collection(db, "poems"));
-
+    
+querySnapshot = await getDocs(
+    query(collection(db, "poems"), orderBy("time", "desc"))
+);
     console.log("Poems found:", querySnapshot.size);
 
 } catch (error) {
