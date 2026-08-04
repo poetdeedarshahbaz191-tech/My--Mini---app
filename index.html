@@ -192,6 +192,7 @@ try {
 querySnapshot = await getDocs(collection(db, "poems"));
     console.log("Poems found:", querySnapshot.size);
 
+    alert("Poems found: " + querySnapshot.size);
 } catch (error) {
     console.error(error);
     alert("Error loading poems: " + error.message);
