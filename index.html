@@ -193,7 +193,6 @@ try {
     
 querySnapshot = await getDocs(collection(db, "poems"));
 
-querySnapshot = await getDocs(q);
     console.log("Poems found:", querySnapshot.size);
 
     alert("Poems found: " + querySnapshot.size);
@@ -206,48 +205,39 @@ querySnapshot = await getDocs(q);
 querySnapshot.forEach((poemDoc) => {
     const data = poemDoc.data();
 
-    console.log(data);
+    poetryBox.innerHTML += `
+    <div class="poem-card">
 
-    
-});
+    <h2 class="poem-title">${data.title || "No Title"}</h2>
 
-poetryBox.innerHTML += `
-<div class="poem-card">
+    <div class="poem-text">
+    <pre>${data.poem || "No Poem"}</pre>
+    </div>
 
-<h2 class="poem-title">${data.title || "No Title"}</h2>
+    <p>❤️ Likes: ${data.likes || 0}</p>
 
-<div class="poem-text">
-<pre>${data.poem || "No Poem"}</pre>
-</div>
+    <button onclick="likePoem('${poemDoc.id}')">
+        ❤️ Like
+    </button>
 
-<p>❤️ Likes: ${data.likes || 0}</p>
+    <button onclick="sharePoem('${poemDoc.id}')">
+        📤 Share
+    </button>
 
-<button onclick="likePoem('${poemDoc.id}')">
-    ❤️ Like
-</button>
+    <button onclick="commentPoem('${poemDoc.id}')">
+        💬 Comment
+    </button>
 
-<button onclick="sharePoem('${poemDoc.id}')">
-    📤 Share
-</button>
+    <button class="admin-btn" onclick="editPoem('${poemDoc.id}')">
+        ✏️ Edit
+    </button>
 
+    <button class="admin-btn" onclick="deletePoem('${poemDoc.id}')">
+        🗑 Delete
+    </button>
 
-<button onclick="commentPoem('${poemDoc.id}')">
-    💬 Comment
-</button>
-
-<button class="admin-btn" style="display:none;" onclick="editPoem('${poemDoc.id}')">
-    ✏️ Edit
-</button>
-
-<button class="admin-btn" style="display:none;" onclick="deletePoem('${poemDoc.id}')">
-    🗑 Delete
-</button>
-
-
-
-</div>
-`;
-
+    </div>
+    `;
 });
 
 }
