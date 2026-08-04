@@ -111,3 +111,51 @@ nav a{
     font-size:18px;
 }
 }
+
+.about,
+.courses{
+    padding:60px 8%;
+    text-align:center;
+}
+
+.about{
+    background:#ffffff;
+}
+
+.courses{
+    background:#eef5ff;
+}
+
+.about h2,
+.courses h2{
+    font-size:36px;
+    color:#0d47a1;
+    margin-bottom:20px;
+}
+
+.about p{
+    max-width:800px;
+    margin:auto;
+    font-size:18px;
+    line-height:1.8;
+}
+
+.course-card{
+    display:inline-block;
+    width:300px;
+    margin:15px;
+    padding:25px;
+    background:white;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+    vertical-align:top;
+}
+
+.course-card h3{
+    color:#1565c0;
+    margin-bottom:15px;
+}
+
+.course-card p{
+    line-height:1.6;
+}
