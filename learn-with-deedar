@@ -1,1 +1,56 @@
 
+learn-with-deedar/
+├── index.html
+├── style.css
+└── script.js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn with Deedar Quambrani | Online English Tuition</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        Learn with Deedar Quambrani
+    </div>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Courses</a>
+        <a href="#">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Online English Tuition</h1>
+
+        <h2>Learn with Deedar Quambrani</h2>
+
+        <p>
+            Improve your English Grammar, Speaking,
+            Writing and Reading through live online classes.
+        </p>
+
+        <a href="#" class="btn">
+            Book Free Trial Class
+        </a>
+    </div>
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+Perfect! 🎉 Your project structure is ready.
+Now copy and paste this into learn-with-deedar/index.html:
+HTML
+Save the file.
+Then reply with "Saved".
+Next, I'll give you the style.css code that will make this page look like a professional online academy website with a modern blue theme, attractive buttons, and a mobile-friendly layout.
