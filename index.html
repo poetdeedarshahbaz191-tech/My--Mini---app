@@ -193,7 +193,7 @@ try {
     
 const q = query(
     collection(db, "poems"),
-    orderBy("createdAt", "desc")
+    orderBy("Date", "desc")
 );
 
 querySnapshot = await getDocs(q);
@@ -212,10 +212,10 @@ const data = poemDoc.data();
 poetryBox.innerHTML += `
 <div class="poem-card">
 
-<h2 class="poem-title">${data.title}</h2>
+<h2 class="poem-title">${data.title || "No Title"}</h2>
 
 <div class="poem-text">
-<pre>${data.poem}</pre>
+<pre>${data.poem || "No Poem"}</pre>
 </div>
 
 <p>❤️ Likes: ${data.likes || 0}</p>
