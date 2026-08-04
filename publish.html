@@ -201,12 +201,13 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
     }
 
     try {
-        await addDoc(collection(db, "poems"), {
-            title,
-            poem,
-            createdAt: serverTimestamp()
-        });
-
+        
+await addDoc(collection(db, "poems"), {
+    title,
+    poem,
+    likes: 0,
+    time: serverTimestamp()
+});
         alert("Published successfully!");
         document.getElementById("title").value = "";
         document.getElementById("poem").value = "";
