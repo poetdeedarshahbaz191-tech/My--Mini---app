@@ -207,7 +207,12 @@ querySnapshot = await getDocs(q);
 }
 
 querySnapshot.forEach((poemDoc) => {
-const data = poemDoc.data();
+    const data = poemDoc.data();
+
+    console.log(data);
+
+    
+});
 
 poetryBox.innerHTML += `
 <div class="poem-card">
