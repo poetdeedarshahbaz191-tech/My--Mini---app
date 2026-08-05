@@ -140,20 +140,22 @@ const db = getFirestore(app);
 
 
 console.log("Current user:", auth.currentUser);
+
 onAuthStateChanged(auth, (user) => {
 
-if (user) {
+    if (user && user.email.toLowerCase().trim() === "poetshahbaz_quambrani@gmail.com") {
+
         document.getElementById("loginBox").style.display = "none";
         document.getElementById("publishBox").style.display = "block";
 
-} else {
+    } else {
 
-    window.location.href = "index.html";
+        document.getElementById("loginBox").style.display = "block";
+        document.getElementById("publishBox").style.display = "none";
 
-}
+    }
 
 });
-
     // LOGIN
 
 document.getElementById("loginBtn").addEventListener("click", async()=>{
@@ -201,12 +203,18 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
     }
 
     try {
-        
-await addDoc(collection(db, "poems"), {
-    title,
-    poem,
+
+    if (!auth.currentUser) {
+        alert("Please login first.");
+        return;
+    }
+
+    await addDoc(collection(db, "poems"), {
+    title: title.trim(),
+    poem: poem.trim(),
     likes: 0,
-    createdAt: serverTimestamp()
+    createdAt: serverTimestamp(),
+    timestamp: Date.now()
 });
         alert("Published successfully!");
         document.getElementById("title").value = "";
