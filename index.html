@@ -194,7 +194,7 @@ try {
 
 const q = query(
   collection(db, "poems"),
-  orderBy("timestamp", "desc")
+  orderBy("date", "desc")
 );
 
 querySnapshot = await getDocs(q);
