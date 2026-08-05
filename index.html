@@ -191,8 +191,13 @@ let querySnapshot;
 
 try {
     
-querySnapshot = await getDocs(collection(db, "poems"));
 
+const q = query(
+  collection(db, "poems"),
+  orderBy("timestamp", "desc")
+);
+
+querySnapshot = await getDocs(q);
     console.log("Poems found:", querySnapshot.size);
 
     alert("Poems found: " + querySnapshot.size);
