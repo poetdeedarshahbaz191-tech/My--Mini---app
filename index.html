@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -8,22 +9,35 @@
 <title>Poet Deedar Shahbaz</title>
 
 <style>
-.admin-btn{
-    display:none;
+
+*{
+    box-sizing:border-box;
 }
 
 body{
     margin:0;
     padding:0;
-    box-sizing:border-box;
     font-family:Georgia, serif;
     background:linear-gradient(135deg,#ffe6f0,#fff7cc,#e8f5ff);
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:0 10px;
+}
+
+h1{
+    text-align:center;
+    color:#8B0000;
+    font-size:38px;
+    margin-top:25px;
 }
 
 .poem-card{
     width:100%;
     max-width:900px;
-    box-sizing:border-box;
     margin:25px auto;
     padding:20px;
     overflow:hidden;
@@ -68,12 +82,14 @@ body{
 .poem-text pre{
     white-space:pre-wrap;
     overflow-wrap:anywhere;
+    word-break:break-word;
     margin:0;
     font-family:Georgia, serif;
 }
 
 button{
     margin-top:20px;
+    margin-right:5px;
     padding:10px 18px;
     border:none;
     border-radius:10px;
@@ -87,21 +103,61 @@ button:hover{
     background:#b22222;
 }
 
-.container{
-    width:100%;
-    max-width:900px;
-    margin:auto;
-    box-sizing:border-box;
+.nav-buttons{
+    text-align:center;
+    margin-bottom:20px;
 }
 
-h1{
+.search-box{
+    text-align:center;
+    margin:20px;
+}
+
+.search-box input{
+    width:90%;
+    max-width:600px;
+    padding:12px;
+    border:2px solid #8B0000;
+    border-radius:10px;
+    font-size:17px;
+}
+
+#loading{
     text-align:center;
     color:#8B0000;
-    font-size:38px;
+    font-size:20px;
+    margin:30px;
 }
+
+#noPoems{
+    display:none;
+    text-align:center;
+    color:#8B0000;
+    font-size:20px;
+    margin:30px;
+}
+
+.admin-btn{
+    display:none;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+    background:#8B0000;
+    color:white;
+}
+
+footer a{
+    color:white;
+    text-decoration:none;
+}
+
 </style>
 
 </head>
+
 
 <body>
 
@@ -109,53 +165,67 @@ h1{
 
 <h1>🌹 Poet Deedar Shahbaz 🌹</h1>
 
-<br>
 
-<div style="text-align:center; margin-bottom:20px;">
+<div class="nav-buttons">
 
 <a href="about.html">
-    <button>ℹ️ About</button>
+<button>ℹ️ About</button>
 </a>
 
 <a href="contact.html">
-    <button>📩 Contact</button>
+<button>📩 Contact</button>
 </a>
 
 <a href="privacy.html">
-    <button>🔒 Privacy Policy</button>
+<button>🔒 Privacy Policy</button>
 </a>
 
 <a href="terms.html">
-    <button>📜 Terms</button>
+<button>📜 Terms</button>
 </a>
 
 <a href="learn-with-deedar/">
-    <button>📚 Learn with Deedar</button>
+<button>📚 Learn with Deedar</button>
 </a>
 
 </div>
 
-<div id="publishArea" style="display:none;">
 
-    <a href="publish.html">
-        <button>🌹 Publish New Poem 🌹</button>
-    </a>
+<div id="publishArea" style="display:none; text-align:center;">
+
+<a href="publish.html">
+<button>🌹 Publish New Poem 🌹</button>
+</a>
+
+</div>
+
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="🔍 Search poems..."
+onkeyup="window.searchPoems()">
 
 </div>
 
-<br><br>
 
-<div style="text-align:center; margin:20px;">
-
-    <input
-        type="text"
-        id="searchInput"
-        placeholder="🔍 Search poems..."
-        onkeyup="window.searchPoems()">
-
+<div id="loading">
+Loading poems...
 </div>
+
+
+<div id="noPoems">
+No poems found.
+</div>
+
 
 <div id="poetry"></div>
+
+
+</div>
+
 
 <script type="module">
 
@@ -163,10 +233,12 @@ import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
+
 import {
     getAuth,
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -183,24 +255,35 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
+/* FIREBASE CONFIG */
+
 const firebaseConfig = {
 
-    apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
+    apiKey:
+    "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
 
-    authDomain: "poet--deedar---shahbaz.firebaseapp.com",
+    authDomain:
+    "poet--deedar---shahbaz.firebaseapp.com",
 
-    projectId: "poet--deedar---shahbaz",
+    projectId:
+    "poet--deedar---shahbaz",
 
-    storageBucket: "poet--deedar---shahbaz.firebasestorage.app",
+    storageBucket:
+    "poet--deedar---shahbaz.firebasestorage.app",
 
-    messagingSenderId: "411582745091",
+    messagingSenderId:
+    "411582745091",
 
-    appId: "1:411582745091:web:96413eef58092e77911c36",
+    appId:
+    "1:411582745091:web:96413eef58092e77911c36",
 
-    measurementId: "G-E0V5QH9D98"
+    measurementId:
+    "G-E0V5QH9D98"
 
 };
 
+
+/* INITIALIZE FIREBASE */
 
 const app = initializeApp(firebaseConfig);
 
@@ -208,194 +291,340 @@ const auth = getAuth(app);
 
 const db = getFirestore(app);
 
-const poetryBox = document.getElementById("poetry");
+const poetryBox =
+document.getElementById("poetry");
 
+const loading =
+document.getElementById("loading");
+
+const noPoems =
+document.getElementById("noPoems");
+
+
+/* LOAD POEMS */
 
 async function loadPoems(){
 
     poetryBox.innerHTML = "";
 
-    let querySnapshot;
+    loading.style.display = "block";
 
-    try {
+    noPoems.style.display = "none";
+
+
+    try{
+
+        /*
+        IMPORTANT:
+
+        publish.html saves:
+
+        timestamp: Date.now()
+
+        Therefore we sort using
+        "timestamp", NOT "Date".
+        */
 
         const q = query(
             collection(db, "poems"),
-            orderBy("Date", "desc")
+            orderBy("timestamp", "desc")
         );
 
-        querySnapshot = await getDocs(q);
+
+        const querySnapshot =
+        await getDocs(q);
+
 
         console.log(
             "Poems found:",
             querySnapshot.size
         );
 
-        alert(
-            "Poems found: " +
-            querySnapshot.size
+
+        loading.style.display = "none";
+
+
+        if(querySnapshot.empty){
+
+            noPoems.style.display = "block";
+
+            return;
+        }
+
+
+        querySnapshot.forEach((poemDoc)=>{
+
+            const data =
+            poemDoc.data();
+
+
+            const title =
+            escapeHTML(data.title || "No Title");
+
+
+            const poem =
+            escapeHTML(data.poem || "No Poem");
+
+
+            const likes =
+            data.likes || 0;
+
+
+            poetryBox.innerHTML += `
+
+            <div class="poem-card">
+
+                <h2 class="poem-title">
+                    ${title}
+                </h2>
+
+
+                <div class="poem-text">
+
+                    <pre>${poem}</pre>
+
+                </div>
+
+
+                <p>
+                    ❤️ Likes: ${likes}
+                </p>
+
+
+                <button
+                onclick="likePoem('${poemDoc.id}')">
+
+                    ❤️ Like
+
+                </button>
+
+
+                <button
+                onclick="sharePoem('${poemDoc.id}')">
+
+                    📤 Share
+
+                </button>
+
+
+                <button
+                onclick="commentPoem('${poemDoc.id}')">
+
+                    💬 Comment
+
+                </button>
+
+
+                <button
+                class="admin-btn"
+                onclick="editPoem('${poemDoc.id}')">
+
+                    ✏️ Edit
+
+                </button>
+
+
+                <button
+                class="admin-btn"
+                onclick="deletePoem('${poemDoc.id}')">
+
+                    🗑 Delete
+
+                </button>
+
+
+            </div>
+
+            `;
+
+        });
+
+
+    }catch(error){
+
+        loading.style.display = "none";
+
+        console.error(
+            "Error loading poems:",
+            error
         );
 
-    } catch (error) {
 
-        console.error(error);
+        poetryBox.innerHTML = `
 
-        alert(
-            "Error loading poems: " +
-            error.message
-        );
+        <div style="
+        text-align:center;
+        color:#8B0000;
+        padding:30px;
+        ">
 
-        return;
+        <h2>Unable to load poems</h2>
+
+        <p>
+        ${escapeHTML(error.message)}
+        </p>
+
+        </div>
+
+        `;
+
     }
-
-
-    querySnapshot.forEach((poemDoc) => {
-
-        const data = poemDoc.data();
-
-        poetryBox.innerHTML += `
-
-<div class="poem-card">
-
-<h2 class="poem-title">
-${data.title || "No Title"}
-</h2>
-
-<div class="poem-text">
-
-<pre>${data.poem || "No Poem"}</pre>
-
-</div>
-
-<p>
-❤️ Likes: ${data.likes || 0}
-</p>
-
-
-<button onclick="likePoem('${poemDoc.id}')">
-    ❤️ Like
-</button>
-
-
-<button onclick="sharePoem('${poemDoc.id}')">
-    📤 Share
-</button>
-
-
-<button onclick="commentPoem('${poemDoc.id}')">
-    💬 Comment
-</button>
-
-
-<button
-    class="admin-btn"
-    style="display:none;"
-    onclick="editPoem('${poemDoc.id}')">
-
-    ✏️ Edit
-
-</button>
-
-
-<button
-    class="admin-btn"
-    style="display:none;"
-    onclick="deletePoem('${poemDoc.id}')">
-
-    🗑 Delete
-
-</button>
-
-</div>
-
-`;
-
-    });
 
 }
 
 
-globalThis.deletePoem = async function(id){
+/* SECURITY - ESCAPE TEXT */
 
-    if(!confirm("Delete this poem?"))
+function escapeHTML(text){
+
+    return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* DELETE POEM */
+
+globalThis.deletePoem =
+async function(id){
+
+    if(!confirm(
+        "Delete this poem?"
+    )){
         return;
+    }
+
 
     try{
 
         await deleteDoc(
-            doc(db, "poems", id)
+            doc(db,"poems",id)
         );
+
 
         alert(
             "Poem deleted successfully."
         );
 
-        location.reload();
+
+        await loadPoems();
+
 
     }catch(error){
 
-        alert(error.message);
+        alert(
+            error.message
+        );
 
     }
 
 };
 
 
-globalThis.editPoem = function(id){
+/* EDIT POEM */
+
+globalThis.editPoem =
+function(id){
 
     window.location.href =
-        "edit.html?id=" + id;
+    "edit.html?id=" + id;
 
 };
 
 
-globalThis.sharePoem = async function(id){
+/* SHARE POEM */
+
+globalThis.sharePoem =
+async function(id){
 
     const url =
-        window.location.href;
+    window.location.href;
+
 
     if(navigator.share){
 
-        await navigator.share({
+        try{
 
-            title:
+            await navigator.share({
+
+                title:
                 "Poet Deedar Shahbaz",
 
-            text:
+                text:
                 "Read this beautiful poem",
 
-            url:url
+                url:url
 
-        });
+            });
+
+        }catch(error){
+
+            console.log(
+                "Share cancelled."
+            );
+
+        }
 
     }else{
 
-        navigator.clipboard.writeText(url);
+        try{
 
-        alert("Link copied!");
+            await navigator.clipboard.writeText(
+                url
+            );
+
+            alert(
+                "Link copied!"
+            );
+
+        }catch(error){
+
+            alert(
+                "Unable to copy link."
+            );
+
+        }
 
     }
 
 };
 
 
-globalThis.commentPoem = function(id){
+/* COMMENT */
+
+globalThis.commentPoem =
+function(id){
 
     window.location.href =
-        "comment.html?id=" + id;
+    "comment.html?id=" + id;
 
 };
 
 
-globalThis.postComment = async function(id){
+/* POST COMMENT */
+
+globalThis.postComment =
+async function(id){
+
+    const element =
+    document.getElementById(
+        "commentText-" + id
+    );
+
+
+    if(!element){
+
+        return;
+
+    }
+
 
     const text =
-        document
-        .getElementById(
-            "commentText-" + id
-        )
-        .value
-        .trim();
+    element.value.trim();
 
 
     if(!text){
@@ -412,14 +641,15 @@ globalThis.postComment = async function(id){
     try{
 
         await addDoc(
-            collection(db, "Comments"),
+            collection(db,"Comments"),
             {
 
                 poemId:id,
 
                 text:text,
 
-                time:serverTimestamp()
+                time:
+                serverTimestamp()
 
             }
         );
@@ -430,28 +660,29 @@ globalThis.postComment = async function(id){
         );
 
 
-        document
-        .getElementById(
-            "commentText-" + id
-        )
-        .value = "";
+        element.value = "";
 
 
     }catch(error){
 
-        alert(error.message);
+        alert(
+            error.message
+        );
 
     }
 
 };
 
 
-globalThis.likePoem = async function(id){
+/* LIKE POEM */
+
+globalThis.likePoem =
+async function(id){
 
     try{
 
         const poemRef =
-            doc(db, "poems", id);
+        doc(db,"poems",id);
 
 
         await updateDoc(
@@ -459,7 +690,7 @@ globalThis.likePoem = async function(id){
             {
 
                 likes:
-                    increment(1)
+                increment(1)
 
             }
         );
@@ -470,99 +701,53 @@ globalThis.likePoem = async function(id){
         );
 
 
-        location.reload();
+        await loadPoems();
 
 
     }catch(error){
 
-        alert(error.message);
+        alert(
+            error.message
+        );
 
     }
 
 };
 
 
-onAuthStateChanged(
-    auth,
-    async (user) => {
+/* SEARCH POEMS */
 
-        if(
-            user &&
-            user.email ===
-            "poetshahbaz_quambrani@gmail.com"
-        ){
+window.searchPoems =
+function(){
 
-            document
-            .getElementById(
-                "publishArea"
-            )
-            .style.display = "block";
-
-        }else{
-
-            document
-            .getElementById(
-                "publishArea"
-            )
-            .style.display = "none";
-
-        }
+    const input =
+    document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
 
 
-        await loadPoems();
+    const poems =
+    document
+    .getElementsByClassName(
+        "poem-card"
+    );
 
 
-        if(
-            user &&
-            user.email ===
-            "poetshahbaz_quambrani@gmail.com"
-        ){
-
-            document
-            .querySelectorAll(
-                ".admin-btn"
-            )
-            .forEach(btn => {
-
-                btn.style.display =
-                    "inline-block";
-
-            });
-
-        }
-
-    }
-);
-
-
-window.searchPoems = function(){
-
-    let input =
-        document
-        .getElementById(
-            "searchInput"
-        )
-        .value
-        .toLowerCase();
-
-
-    let poems =
-        document
-        .getElementsByClassName(
-            "poem-card"
-        );
+    let visibleCount = 0;
 
 
     for(
-        let i = 0;
-        i < poems.length;
+        let i=0;
+        i<poems.length;
         i++
     ){
 
-        let text =
-            poems[i]
-            .innerText
-            .toLowerCase();
+        const text =
+        poems[i]
+        .innerText
+        .toLowerCase();
 
 
         if(
@@ -570,75 +755,156 @@ window.searchPoems = function(){
         ){
 
             poems[i].style.display =
-                "block";
+            "block";
+
+            visibleCount++;
 
         }else{
 
             poems[i].style.display =
-                "none";
+            "none";
 
         }
 
     }
 
-}
+
+    if(
+        poems.length > 0 &&
+        visibleCount === 0
+    ){
+
+        noPoems.style.display =
+        "block";
+
+    }else{
+
+        noPoems.style.display =
+        "none";
+
+    }
+
+};
+
+
+/* AUTHENTICATION */
+
+onAuthStateChanged(
+    auth,
+    async(user)=>{
+
+
+        if(
+            user &&
+            user.email &&
+            user.email
+            .toLowerCase()
+            .trim() ===
+            "poetshahbaz_quambrani@gmail.com"
+        ){
+
+            document
+            .getElementById(
+                "publishArea"
+            )
+            .style.display =
+            "block";
+
+
+        }else{
+
+            document
+            .getElementById(
+                "publishArea"
+            )
+            .style.display =
+            "none";
+
+        }
+
+
+        /*
+        IMPORTANT:
+
+        Poems are loaded for EVERYONE,
+        including logged-out visitors.
+        */
+
+        await loadPoems();
+
+
+        /*
+        Show admin buttons only
+        to the authorized account.
+        */
+
+        if(
+            user &&
+            user.email &&
+            user.email
+            .toLowerCase()
+            .trim() ===
+            "poetshahbaz_quambrani@gmail.com"
+        ){
+
+            document
+            .querySelectorAll(
+                ".admin-btn"
+            )
+            .forEach(
+                btn => {
+
+                    btn.style.display =
+                    "inline-block";
+
+                }
+            );
+
+        }
+
+    }
+
+);
 
 </script>
 
 
-<footer
-style="
-text-align:center;
-padding:20px;
-margin-top:40px;
-background:#8B0000;
-color:white;
-">
+<footer>
 
 <p>
 © 2026 Poet Deedar Shahbaz.
 All Rights Reserved.
 </p>
 
+
 <p>
 
-<a
-href="about.html"
-style="color:white;"
->
+<a href="about.html">
 About
 </a>
 
-|
+&nbsp; | &nbsp;
 
-<a
-href="contact.html"
-style="color:white;"
->
+<a href="contact.html">
 Contact
 </a>
 
-|
+&nbsp; | &nbsp;
 
-<a
-href="privacy.html"
-style="color:white;"
->
+<a href="privacy.html">
 Privacy Policy
 </a>
 
-|
+&nbsp; | &nbsp;
 
-<a
-href="terms.html"
-style="color:white;"
->
+<a href="terms.html">
 Terms & Conditions
 </a>
 
 </p>
 
 </footer>
+
 
 </body>
 </html>
