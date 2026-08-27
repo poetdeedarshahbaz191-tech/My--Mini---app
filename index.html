@@ -1,400 +1,642 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Poet Deedar Shahbaz | Poetry & Thoughts</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<title>Poet Deedar Shahbaz</title>
 
-        body {
-            margin: 0;
-            font-family: Georgia, "Times New Roman", serif;
-            background: linear-gradient(135deg, #f7f1e3, #ffffff, #f3e5f5);
-            color: #2c1a1d;
-        }
+<style>
+.admin-btn{
+    display:none;
+}
 
-        header {
-            background: linear-gradient(135deg, #4a102a, #7b1e3a);
-            color: white;
-            padding: 18px 15px;
-            text-align: center;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.2);
-        }
+body{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Georgia, serif;
+    background:linear-gradient(135deg,#ffe6f0,#fff7cc,#e8f5ff);
+}
 
-        header h1 {
-            margin: 0;
-            font-size: 32px;
-        }
+.poem-card{
+    width:100%;
+    max-width:900px;
+    box-sizing:border-box;
+    margin:25px auto;
+    padding:20px;
+    overflow:hidden;
+    border-radius:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
 
-        header p {
-            margin: 8px 0 0;
-            font-style: italic;
-            color: #f8d7da;
-        }
+.poem-card:nth-child(4n+1){
+    background:#fff0f5;
+}
 
-        nav {
-            margin-top: 18px;
-        }
+.poem-card:nth-child(4n+2){
+    background:#fff8dc;
+}
 
-        nav a {
-            display: inline-block;
-            color: white;
-            text-decoration: none;
-            padding: 9px 13px;
-            margin: 4px;
-            border-radius: 20px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-        }
+.poem-card:nth-child(4n+3){
+    background:#e8f8ff;
+}
 
-        nav a:hover {
-            background: rgba(255,255,255,0.18);
-        }
+.poem-card:nth-child(4n+4){
+    background:#f0fff0;
+}
 
-        .hero {
-            text-align: center;
-            padding: 70px 20px;
-            background:
-                linear-gradient(rgba(74,16,42,0.75), rgba(74,16,42,0.75)),
-                linear-gradient(135deg, #7b1e3a, #4a102a);
-            color: white;
-        }
+.poem-title{
+    text-align:center;
+    color:#8B0000;
+    font-size:28px;
+    margin-bottom:20px;
+}
 
-        .hero h2 {
-            font-size: 42px;
-            margin: 0 0 15px;
-        }
+.poem-text{
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+    direction:rtl;
+    text-align:right;
+    line-height:2;
+    font-size:20px;
+    width:100%;
+}
 
-        .hero p {
-            max-width: 700px;
-            margin: auto;
-            font-size: 19px;
-            line-height: 1.8;
-        }
+.poem-text pre{
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    margin:0;
+    font-family:Georgia, serif;
+}
 
-        .buttons {
-            margin-top: 28px;
-        }
+button{
+    margin-top:20px;
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    background:#8B0000;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+}
 
-        .btn {
-            display: inline-block;
-            text-decoration: none;
-            padding: 13px 22px;
-            margin: 6px;
-            border-radius: 25px;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-        }
+button:hover{
+    background:#b22222;
+}
 
-        .btn-primary {
-            background: #ffffff;
-            color: #7b1e3a;
-        }
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    box-sizing:border-box;
+}
 
-        .btn-secondary {
-            background: #d4af37;
-            color: #2c1a1d;
-        }
+h1{
+    text-align:center;
+    color:#8B0000;
+    font-size:38px;
+}
+</style>
 
-        .btn:hover {
-            opacity: 0.88;
-        }
-
-        .section {
-            max-width: 1050px;
-            margin: auto;
-            padding: 55px 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            color: #7b1e3a;
-            font-size: 32px;
-            margin-bottom: 35px;
-        }
-
-        .poetry-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.12);
-            text-align: center;
-            transition: 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card .icon {
-            font-size: 42px;
-        }
-
-        .card h3 {
-            color: #7b1e3a;
-            font-size: 22px;
-            margin: 12px 0;
-        }
-
-        .card p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .card a {
-            display: inline-block;
-            margin-top: 12px;
-            color: #7b1e3a;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .about {
-            background: #fff8f0;
-            text-align: center;
-            border-radius: 20px;
-            padding: 40px 25px;
-        }
-
-        .about h2 {
-            color: #7b1e3a;
-            margin-top: 0;
-        }
-
-        .about p {
-            max-width: 750px;
-            margin: 15px auto;
-            font-size: 17px;
-            line-height: 1.8;
-        }
-
-        footer {
-            background: #3a0d20;
-            color: white;
-            text-align: center;
-            padding: 35px 15px;
-        }
-
-        footer h3 {
-            margin-top: 0;
-            font-size: 24px;
-        }
-
-        footer a {
-            color: #f5d76e;
-            text-decoration: none;
-            margin: 0 8px;
-        }
-
-        .copyright {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #ddd;
-        }
-
-        @media (max-width: 600px) {
-
-            header h1 {
-                font-size: 26px;
-            }
-
-            .hero {
-                padding: 55px 18px;
-            }
-
-            .hero h2 {
-                font-size: 32px;
-            }
-
-            .hero p {
-                font-size: 17px;
-            }
-
-            nav a {
-                font-size: 13px;
-                padding: 8px 10px;
-            }
-
-        }
-
-    </style>
 </head>
 
 <body>
 
-<header>
+<div class="container">
 
-    <h1>✒️ Poet Deedar Shahbaz</h1>
+<h1>🌹 Poet Deedar Shahbaz 🌹</h1>
 
-    <p>Words from the Heart • Poetry for the Soul</p>
+<br>
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="publish.html">Publish Poetry</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="login.html">Login</a>
-    </nav>
+<div style="text-align:center; margin-bottom:20px;">
 
-</header>
+<a href="about.html">
+    <button>ℹ️ About</button>
+</a>
 
+<a href="contact.html">
+    <button>📩 Contact</button>
+</a>
 
-<section class="hero">
+<a href="privacy.html">
+    <button>🔒 Privacy Policy</button>
+</a>
 
-    <h2>Welcome to My World of Poetry</h2>
+<a href="terms.html">
+    <button>📜 Terms</button>
+</a>
 
-    <p>
-        Poetry is the voice of the heart.
-        Here you can read, share and celebrate beautiful
-        Urdu, Sindhi and English poetry.
-    </p>
+<a href="learn-with-deedar/">
+    <button>📚 Learn with Deedar</button>
+</a>
 
-    <div class="buttons">
+</div>
 
-        <a class="btn btn-primary" href="publish.html">
-            ✍️ Publish Your Poetry
-        </a>
+<div id="publishArea" style="display:none;">
 
-        <a class="btn btn-secondary" href="#poetry">
-            📖 Explore Poetry
-        </a>
+    <a href="publish.html">
+        <button>🌹 Publish New Poem 🌹</button>
+    </a>
 
-    </div>
+</div>
 
-</section>
+<br><br>
 
+<div style="text-align:center; margin:20px;">
 
-<section class="section" id="poetry">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search poems..."
+        onkeyup="window.searchPoems()">
 
-    <h2 class="section-title">Explore Poetry</h2>
+</div>
 
-    <div class="poetry-grid">
+<div id="poetry"></div>
 
-        <div class="card">
+<script type="module">
 
-            <div class="icon">🌹</div>
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-            <h3>Urdu Poetry</h3>
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-            <p>
-                Beautiful Urdu poetry filled with love,
-                emotions and deep thoughts.
-            </p>
-
-            <a href="publish.html">Read Poetry →</a>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="icon">🌿</div>
-
-            <h3>Sindhi Poetry</h3>
-
-            <p>
-                Discover the beauty, culture and emotions
-                of Sindhi poetry.
-            </p>
-
-            <a href="publish.html">Read Poetry →</a>
-
-        </div>
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    orderBy,
+    deleteDoc,
+    doc,
+    addDoc,
+    updateDoc,
+    increment,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-        <div class="card">
+const firebaseConfig = {
 
-            <div class="icon">✨</div>
+    apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
 
-            <h3>English Poetry</h3>
+    authDomain: "poet--deedar---shahbaz.firebaseapp.com",
 
-            <p>
-                Explore poems, thoughts and creative
-                expressions in English.
-            </p>
+    projectId: "poet--deedar---shahbaz",
 
-            <a href="publish.html">Read Poetry →</a>
+    storageBucket: "poet--deedar---shahbaz.firebasestorage.app",
 
-        </div>
+    messagingSenderId: "411582745091",
 
+    appId: "1:411582745091:web:96413eef58092e77911c36",
 
-        <div class="card">
+    measurementId: "G-E0V5QH9D98"
 
-            <div class="icon">🖋️</div>
-
-            <h3>Share Your Poetry</h3>
-
-            <p>
-                Are you a poet? Share your poetry
-                and let your words reach readers.
-            </p>
-
-            <a href="publish.html">Publish Now →</a>
-
-        </div>
-
-    </div>
-
-</section>
+};
 
 
-<section class="section">
+const app = initializeApp(firebaseConfig);
 
-    <div class="about">
+const auth = getAuth(app);
 
-        <h2>About Poet Deedar Shahbaz</h2>
+const db = getFirestore(app);
 
-        <p>
-            Poet Deedar Shahbaz is a poet, writer and teacher
-            who believes that words have the power to express
-            feelings, inspire people and connect hearts.
-        </p>
-
-        <p>
-            This platform is dedicated to poetry, creativity
-            and the voices of writers who have something
-            meaningful to share with the world.
-        </p>
-
-        <a class="btn btn-secondary" href="about.html">
-            Learn More About Me
-        </a>
-
-    </div>
-
-</section>
+const poetryBox = document.getElementById("poetry");
 
 
-<footer>
+async function loadPoems(){
 
-    <h3>✒️ Poet Deedar Shahbaz</h3>
+    poetryBox.innerHTML = "";
 
-    <p>Words from the Heart • Poetry for the Soul</p>
+    let querySnapshot;
 
-    <p>
-        <a href="index.html">Home</a> |
-        <a href="publish.html">Publish</a> |
-        <a href="about.html">About</a> |
-        <a href="contact.html">Contact</a>
-    </p>
+    try {
 
-    <div class="copyright">
+        const q = query(
+            collection(db, "poems"),
+            orderBy("Date", "desc")
+        );
 
-        © 2026 Poet Deedar Shahbaz. All Rights Reserved.
+        querySnapshot = await getDocs(q);
 
-    </div>
+        console.log(
+            "Poems found:",
+            querySnapshot.size
+        );
+
+        alert(
+            "Poems found: " +
+            querySnapshot.size
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Error loading poems: " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    querySnapshot.forEach((poemDoc) => {
+
+        const data = poemDoc.data();
+
+        poetryBox.innerHTML += `
+
+<div class="poem-card">
+
+<h2 class="poem-title">
+${data.title || "No Title"}
+</h2>
+
+<div class="poem-text">
+
+<pre>${data.poem || "No Poem"}</pre>
+
+</div>
+
+<p>
+❤️ Likes: ${data.likes || 0}
+</p>
+
+
+<button onclick="likePoem('${poemDoc.id}')">
+    ❤️ Like
+</button>
+
+
+<button onclick="sharePoem('${poemDoc.id}')">
+    📤 Share
+</button>
+
+
+<button onclick="commentPoem('${poemDoc.id}')">
+    💬 Comment
+</button>
+
+
+<button
+    class="admin-btn"
+    style="display:none;"
+    onclick="editPoem('${poemDoc.id}')">
+
+    ✏️ Edit
+
+</button>
+
+
+<button
+    class="admin-btn"
+    style="display:none;"
+    onclick="deletePoem('${poemDoc.id}')">
+
+    🗑 Delete
+
+</button>
+
+</div>
+
+`;
+
+    });
+
+}
+
+
+globalThis.deletePoem = async function(id){
+
+    if(!confirm("Delete this poem?"))
+        return;
+
+    try{
+
+        await deleteDoc(
+            doc(db, "poems", id)
+        );
+
+        alert(
+            "Poem deleted successfully."
+        );
+
+        location.reload();
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+};
+
+
+globalThis.editPoem = function(id){
+
+    window.location.href =
+        "edit.html?id=" + id;
+
+};
+
+
+globalThis.sharePoem = async function(id){
+
+    const url =
+        window.location.href;
+
+    if(navigator.share){
+
+        await navigator.share({
+
+            title:
+                "Poet Deedar Shahbaz",
+
+            text:
+                "Read this beautiful poem",
+
+            url:url
+
+        });
+
+    }else{
+
+        navigator.clipboard.writeText(url);
+
+        alert("Link copied!");
+
+    }
+
+};
+
+
+globalThis.commentPoem = function(id){
+
+    window.location.href =
+        "comment.html?id=" + id;
+
+};
+
+
+globalThis.postComment = async function(id){
+
+    const text =
+        document
+        .getElementById(
+            "commentText-" + id
+        )
+        .value
+        .trim();
+
+
+    if(!text){
+
+        alert(
+            "Please write a comment."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        await addDoc(
+            collection(db, "Comments"),
+            {
+
+                poemId:id,
+
+                text:text,
+
+                time:serverTimestamp()
+
+            }
+        );
+
+
+        alert(
+            "Comment posted successfully!"
+        );
+
+
+        document
+        .getElementById(
+            "commentText-" + id
+        )
+        .value = "";
+
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+};
+
+
+globalThis.likePoem = async function(id){
+
+    try{
+
+        const poemRef =
+            doc(db, "poems", id);
+
+
+        await updateDoc(
+            poemRef,
+            {
+
+                likes:
+                    increment(1)
+
+            }
+        );
+
+
+        alert(
+            "❤️ Thanks for liking this poem!"
+        );
+
+
+        location.reload();
+
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+};
+
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        if(
+            user &&
+            user.email ===
+            "poetshahbaz_quambrani@gmail.com"
+        ){
+
+            document
+            .getElementById(
+                "publishArea"
+            )
+            .style.display = "block";
+
+        }else{
+
+            document
+            .getElementById(
+                "publishArea"
+            )
+            .style.display = "none";
+
+        }
+
+
+        await loadPoems();
+
+
+        if(
+            user &&
+            user.email ===
+            "poetshahbaz_quambrani@gmail.com"
+        ){
+
+            document
+            .querySelectorAll(
+                ".admin-btn"
+            )
+            .forEach(btn => {
+
+                btn.style.display =
+                    "inline-block";
+
+            });
+
+        }
+
+    }
+);
+
+
+window.searchPoems = function(){
+
+    let input =
+        document
+        .getElementById(
+            "searchInput"
+        )
+        .value
+        .toLowerCase();
+
+
+    let poems =
+        document
+        .getElementsByClassName(
+            "poem-card"
+        );
+
+
+    for(
+        let i = 0;
+        i < poems.length;
+        i++
+    ){
+
+        let text =
+            poems[i]
+            .innerText
+            .toLowerCase();
+
+
+        if(
+            text.includes(input)
+        ){
+
+            poems[i].style.display =
+                "block";
+
+        }else{
+
+            poems[i].style.display =
+                "none";
+
+        }
+
+    }
+
+}
+
+</script>
+
+
+<footer
+style="
+text-align:center;
+padding:20px;
+margin-top:40px;
+background:#8B0000;
+color:white;
+">
+
+<p>
+© 2026 Poet Deedar Shahbaz.
+All Rights Reserved.
+</p>
+
+<p>
+
+<a
+href="about.html"
+style="color:white;"
+>
+About
+</a>
+
+|
+
+<a
+href="contact.html"
+style="color:white;"
+>
+Contact
+</a>
+
+|
+
+<a
+href="privacy.html"
+style="color:white;"
+>
+Privacy Policy
+</a>
+
+|
+
+<a
+href="terms.html"
+style="color:white;"
+>
+Terms & Conditions
+</a>
+
+</p>
 
 </footer>
 
