@@ -1,5 +1,4 @@
 
-        
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,9 +53,8 @@ button{
 
 <h1>🌹 Publish New Poem 🌹</h1>
 
-
-
 <div id="loginBox" style="display:none;">
+
 <h2>Admin Login</h2>
 
 <input type="email" id="email" placeholder="Email">
@@ -72,13 +70,11 @@ button{
 </div>
 
 
-
 <div id="publishBox" style="display:none;">
 
 <label>Poem Title</label>
 
 <input type="text" id="title" placeholder="Enter title">
-
 
 <label>Your Poem</label>
 
@@ -87,10 +83,10 @@ button{
 <br>
 
 <button id="publishBtn">Publish</button>
-<button id="logoutBtn">Logout</button>
-    
-</div>
 
+<button id="logoutBtn">Logout</button>
+
+</div>
 
 </div>
 
@@ -99,133 +95,357 @@ button{
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-
-
 import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    
+
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  serverTimestamp
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp,
+    getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
 const firebaseConfig = {
 
-apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
+    apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
 
-authDomain: "poet--deedar---shahbaz.firebaseapp.com",
+    authDomain: "poet--deedar---shahbaz.firebaseapp.com",
 
-projectId: "poet--deedar---shahbaz",
+    projectId: "poet--deedar---shahbaz",
 
-storageBucket: "poet--deedar---shahbaz.firebasestorage.app",
+    storageBucket: "poet--deedar---shahbaz.firebasestorage.app",
 
-messagingSenderId: "411582745091",
+    messagingSenderId: "411582745091",
 
-appId: "1:411582745091:web:96413eef58092e77911c36",
+    appId: "1:411582745091:web:96413eef58092e77911c36",
 
-measurementId: "G-E0V5QH9D98"
+    measurementId: "G-E0V5QH9D98"
 
 };
 
 
 const app = initializeApp(firebaseConfig);
-    
+
 const auth = getAuth(app);
+
 auth.useDeviceLanguage();
+
 const db = getFirestore(app);
 
 
-console.log("Current user:", auth.currentUser);
+// ============================================
+// NORMALIZE POEM TEXT
+// ============================================
+
+function normalizePoem(text) {
+
+    return text
+
+        // Convert to lowercase
+        .toLowerCase()
+
+        // Convert different line endings to normal spaces
+        .replace(/\r\n/g, "\n")
+        .replace(/\r/g, "\n")
+
+        // Remove extra spaces around lines
+        .replace(/[ \t]+/g, " ")
+
+        // Remove spaces at beginning/end of lines
+        .split("\n")
+        .map(line => line.trim())
+        .join("\n")
+
+        // Remove extra blank lines
+        .replace(/\n+/g, "\n")
+
+        // Remove spaces at beginning/end of whole poem
+        .trim();
+}
+
+
+// ============================================
+// AUTH STATE
+// ============================================
 
 onAuthStateChanged(auth, (user) => {
 
-    if (user && user.email.toLowerCase().trim() === "poetshahbaz_quambrani@gmail.com") {
+    if (
+        user &&
+        user.email &&
+        user.email.toLowerCase().trim() ===
+        "poetshahbaz_quambrani@gmail.com"
+    ) {
 
         document.getElementById("loginBox").style.display = "none";
+
         document.getElementById("publishBox").style.display = "block";
 
     } else {
 
         document.getElementById("loginBox").style.display = "block";
+
         document.getElementById("publishBox").style.display = "none";
 
     }
 
 });
-    // LOGIN
-
-document.getElementById("loginBtn").addEventListener("click", async()=>{
-
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-
-try{
-
-const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
 
-if (userCredential.user.email.toLowerCase().trim() === "poetshahbaz_quambrani@gmail.com") {
-    alert("Logged in successfully!");
+// ============================================
+// LOGIN
+// ============================================
 
-} else {
+document.getElementById("loginBtn").addEventListener("click", async () => {
 
-alert("Not authorized");
+    const email =
+        document.getElementById("email").value.trim();
 
-await signOut(auth);
+    const password =
+        document.getElementById("password").value;
 
-}
 
+    if (!email || !password) {
 
-} catch (error) {
-    console.log("Error code:", error.code);
-    console.log("Error message:", error.message);
-    alert(error.code);
-}
+        alert("Please enter email and password.");
 
-});
-
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-    await signOut(auth);
-    alert("Logged out successfully");
-    window.location.href = "index.html";
-});
-    document.getElementById("publishBtn").addEventListener("click", async () => {
-    const title = document.getElementById("title").value;
-    const poem = document.getElementById("poem").value;
-
-    if (!title || !poem) {
-        alert("Please enter both title and poem.");
         return;
+
     }
+
 
     try {
 
-    if (!auth.currentUser) {
-        alert("Please login first.");
-        return;
-    }
+        const userCredential =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
 
-    await addDoc(collection(db, "poems"), {
-    title: title.trim(),
-    poem: poem.trim(),
-    likes: 0,
-    createdAt: serverTimestamp(),
-    timestamp: Date.now()
-});
-        alert("Published successfully!");
-        document.getElementById("title").value = "";
-        document.getElementById("poem").value = "";
+
+        if (
+            userCredential.user.email &&
+            userCredential.user.email.toLowerCase().trim() ===
+            "poetshahbaz_quambrani@gmail.com"
+        ) {
+
+            alert("Logged in successfully!");
+
+        } else {
+
+            alert("Not authorized");
+
+            await signOut(auth);
+
+        }
 
     } catch (error) {
-        alert(error.message);
+
+        console.log("Error code:", error.code);
+
+        console.log("Error message:", error.message);
+
+        alert(error.code);
+
     }
+
+});
+
+
+// ============================================
+// LOGOUT
+// ============================================
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+
+    await signOut(auth);
+
+    alert("Logged out successfully");
+
+    window.location.href = "index.html";
+
+});
+
+
+// ============================================
+// PUBLISH POEM
+// ============================================
+
+document.getElementById("publishBtn").addEventListener("click", async () => {
+
+    const titleInput =
+        document.getElementById("title");
+
+    const poemInput =
+        document.getElementById("poem");
+
+
+    const title =
+        titleInput.value.trim();
+
+    const poem =
+        poemInput.value.trim();
+
+
+    // Check empty fields
+
+    if (!title || !poem) {
+
+        alert("Please enter both title and poem.");
+
+        return;
+
+    }
+
+
+    // Check login
+
+    if (!auth.currentUser) {
+
+        alert("Please login first.");
+
+        return;
+
+    }
+
+
+    // Check admin
+
+    if (
+        !auth.currentUser.email ||
+        auth.currentUser.email.toLowerCase().trim() !==
+        "poetshahbaz_quambrani@gmail.com"
+    ) {
+
+        alert("You are not authorized to publish poems.");
+
+        return;
+
+    }
+
+
+    try {
+
+        // ========================================
+        // CREATE NORMALIZED VERSION OF NEW POEM
+        // ========================================
+
+        const newPoemNormalized =
+            normalizePoem(poem);
+
+
+        // ========================================
+        // GET ALL EXISTING POEMS
+        // ========================================
+
+        const poemsSnapshot =
+            await getDocs(collection(db, "poems"));
+
+
+        let duplicateFound = false;
+
+
+        poemsSnapshot.forEach((doc) => {
+
+            const data = doc.data();
+
+            const existingPoem =
+                data.poem || "";
+
+
+            const existingPoemNormalized =
+                normalizePoem(existingPoem);
+
+
+            // ====================================
+            // COMPARE POETRY ONLY
+            // TITLE IS NOT USED
+            // ====================================
+
+            if (
+                existingPoemNormalized ===
+                newPoemNormalized
+            ) {
+
+                duplicateFound = true;
+
+            }
+
+        });
+
+
+        // ========================================
+        // DUPLICATE FOUND
+        // ========================================
+
+        if (duplicateFound) {
+
+            alert(
+                "⚠️ THIS POEM IS ALREADY PUBLISHED!\n\n" +
+                "The website recognized the poetry text.\n\n" +
+                "It was NOT added again."
+            );
+
+            return;
+
+        }
+
+
+        // ========================================
+        // NEW POEM — SAVE IT
+        // ========================================
+
+        await addDoc(collection(db, "poems"), {
+
+            title: title,
+
+            poem: poem,
+
+            likes: 0,
+
+            createdAt: serverTimestamp(),
+
+            timestamp: Date.now()
+
+        });
+
+
+        alert(
+            "✅ Poem published successfully!"
+        );
+
+
+        // Clear fields
+
+        titleInput.value = "";
+
+        poemInput.value = "";
+
+
+    } catch (error) {
+
+        console.error(
+            "Publish error:",
+            error
+        );
+
+        alert(
+            "Error publishing poem:\n" +
+            error.message
+        );
+
+    }
+
 });
 
 </script>
+
 </body>
 </html>
