@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -244,8 +245,6 @@ import {
     getFirestore,
     collection,
     getDocs,
-    query,
-    orderBy,
     deleteDoc,
     doc,
     addDoc,
@@ -285,11 +284,15 @@ const firebaseConfig = {
 
 /* INITIALIZE FIREBASE */
 
-const app = initializeApp(firebaseConfig);
+const app =
+initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth =
+getAuth(app);
 
-const db = getFirestore(app);
+const db =
+getFirestore(app);
+
 
 const poetryBox =
 document.getElementById("poetry");
@@ -301,7 +304,7 @@ const noPoems =
 document.getElementById("noPoems");
 
 
-/* LOAD POEMS */
+/* LOAD ALL POEMS */
 
 async function loadPoems(){
 
@@ -317,22 +320,20 @@ async function loadPoems(){
         /*
         IMPORTANT:
 
-        publish.html saves:
+        We do NOT use orderBy("timestamp")
+        here.
 
-        timestamp: Date.now()
+        Your older poems use "time".
+        Your newer poems use "timestamp".
 
-        Therefore we sort using
-        "timestamp", NOT "Date".
+        Therefore we load ALL documents first
+        and sort them ourselves.
         */
 
-        const q = query(
-            collection(db, "poems"),
-            orderBy("timestamp", "desc")
-        );
-
-
         const querySnapshot =
-        await getDocs(q);
+            await getDocs(
+                collection(db, "poems")
+            );
 
 
         console.log(
@@ -352,22 +353,126 @@ async function loadPoems(){
         }
 
 
-        querySnapshot.forEach((poemDoc)=>{
+        /*
+        Convert every Firestore document
+        into an object for sorting.
+        */
+
+        const poems = [];
+
+
+        querySnapshot.forEach((poemDoc) => {
 
             const data =
-            poemDoc.data();
+                poemDoc.data();
+
+
+            let sortDate = 0;
+
+
+            /*
+            NEW POEMS
+
+            publish.html saves:
+            timestamp: Date.now()
+            */
+
+            if(
+                typeof data.timestamp === "number"
+            ){
+
+                sortDate =
+                    data.timestamp;
+
+            }
+
+
+            /*
+            OLD POEMS
+
+            Older poems use:
+            time: Firestore Timestamp
+            */
+
+            else if(
+                data.time &&
+                typeof data.time.toMillis === "function"
+            ){
+
+                sortDate =
+                    data.time.toMillis();
+
+            }
+
+
+            /*
+            ALSO SUPPORT createdAt
+            if any poem has that field.
+            */
+
+            else if(
+                data.createdAt &&
+                typeof data.createdAt.toMillis === "function"
+            ){
+
+                sortDate =
+                    data.createdAt.toMillis();
+
+            }
+
+
+            poems.push({
+
+                id:
+                poemDoc.id,
+
+                data:
+                data,
+
+                sortDate:
+                sortDate
+
+            });
+
+        });
+
+
+        /*
+        NEWEST POEMS FIRST
+        */
+
+        poems.sort(
+            (a,b) =>
+            b.sortDate - a.sortDate
+        );
+
+
+        /*
+        DISPLAY ALL POEMS
+        */
+
+        poems.forEach((item) => {
+
+            const data =
+                item.data;
 
 
             const title =
-            escapeHTML(data.title || "No Title");
+                escapeHTML(
+                    data.title ||
+                    "No Title"
+                );
 
 
             const poem =
-            escapeHTML(data.poem || "No Poem");
+                escapeHTML(
+                    data.poem ||
+                    "No Poem"
+                );
 
 
             const likes =
-            data.likes || 0;
+                data.likes || 0;
 
 
             poetryBox.innerHTML += `
@@ -392,7 +497,7 @@ async function loadPoems(){
 
 
                 <button
-                onclick="likePoem('${poemDoc.id}')">
+                onclick="likePoem('${item.id}')">
 
                     ❤️ Like
 
@@ -400,7 +505,7 @@ async function loadPoems(){
 
 
                 <button
-                onclick="sharePoem('${poemDoc.id}')">
+                onclick="sharePoem('${item.id}')">
 
                     📤 Share
 
@@ -408,7 +513,7 @@ async function loadPoems(){
 
 
                 <button
-                onclick="commentPoem('${poemDoc.id}')">
+                onclick="commentPoem('${item.id}')">
 
                     💬 Comment
 
@@ -417,7 +522,7 @@ async function loadPoems(){
 
                 <button
                 class="admin-btn"
-                onclick="editPoem('${poemDoc.id}')">
+                onclick="editPoem('${item.id}')">
 
                     ✏️ Edit
 
@@ -426,7 +531,7 @@ async function loadPoems(){
 
                 <button
                 class="admin-btn"
-                onclick="deletePoem('${poemDoc.id}')">
+                onclick="deletePoem('${item.id}')">
 
                     🗑 Delete
 
@@ -444,6 +549,7 @@ async function loadPoems(){
 
         loading.style.display = "none";
 
+
         console.error(
             "Error loading poems:",
             error
@@ -458,7 +564,9 @@ async function loadPoems(){
         padding:30px;
         ">
 
-        <h2>Unable to load poems</h2>
+        <h2>
+        Unable to load poems
+        </h2>
 
         <p>
         ${escapeHTML(error.message)}
@@ -492,10 +600,14 @@ function escapeHTML(text){
 globalThis.deletePoem =
 async function(id){
 
-    if(!confirm(
-        "Delete this poem?"
-    )){
+    if(
+        !confirm(
+            "Delete this poem?"
+        )
+    ){
+
         return;
+
     }
 
 
@@ -542,7 +654,7 @@ globalThis.sharePoem =
 async function(id){
 
     const url =
-    window.location.href;
+        window.location.href;
 
 
     if(navigator.share){
@@ -611,9 +723,9 @@ globalThis.postComment =
 async function(id){
 
     const element =
-    document.getElementById(
-        "commentText-" + id
-    );
+        document.getElementById(
+            "commentText-" + id
+        );
 
 
     if(!element){
@@ -624,7 +736,7 @@ async function(id){
 
 
     const text =
-    element.value.trim();
+        element.value.trim();
 
 
     if(!text){
@@ -682,7 +794,7 @@ async function(id){
     try{
 
         const poemRef =
-        doc(db,"poems",id);
+            doc(db,"poems",id);
 
 
         await updateDoc(
@@ -721,33 +833,33 @@ window.searchPoems =
 function(){
 
     const input =
-    document
-    .getElementById("searchInput")
-    .value
-    .toLowerCase()
-    .trim();
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
 
 
     const poems =
-    document
-    .getElementsByClassName(
-        "poem-card"
-    );
+        document
+        .getElementsByClassName(
+            "poem-card"
+        );
 
 
     let visibleCount = 0;
 
 
     for(
-        let i=0;
-        i<poems.length;
+        let i = 0;
+        i < poems.length;
         i++
     ){
 
         const text =
-        poems[i]
-        .innerText
-        .toLowerCase();
+            poems[i]
+            .innerText
+            .toLowerCase();
 
 
         if(
@@ -755,14 +867,14 @@ function(){
         ){
 
             poems[i].style.display =
-            "block";
+                "block";
 
             visibleCount++;
 
         }else{
 
             poems[i].style.display =
-            "none";
+                "none";
 
         }
 
@@ -775,12 +887,12 @@ function(){
     ){
 
         noPoems.style.display =
-        "block";
+            "block";
 
     }else{
 
         noPoems.style.display =
-        "none";
+            "none";
 
     }
 
@@ -794,14 +906,24 @@ onAuthStateChanged(
     async(user)=>{
 
 
-        if(
+        /*
+        ADMIN EMAIL
+        */
+
+        const isAdmin =
             user &&
             user.email &&
             user.email
             .toLowerCase()
             .trim() ===
-            "poetshahbaz_quambrani@gmail.com"
-        ){
+            "poetshahbaz_quambrani@gmail.com";
+
+
+        /*
+        SHOW / HIDE PUBLISH BUTTON
+        */
+
+        if(isAdmin){
 
             document
             .getElementById(
@@ -809,7 +931,6 @@ onAuthStateChanged(
             )
             .style.display =
             "block";
-
 
         }else{
 
@@ -824,10 +945,8 @@ onAuthStateChanged(
 
 
         /*
-        IMPORTANT:
-
         Poems are loaded for EVERYONE,
-        including logged-out visitors.
+        including visitors who are not logged in.
         */
 
         await loadPoems();
@@ -835,17 +954,10 @@ onAuthStateChanged(
 
         /*
         Show admin buttons only
-        to the authorized account.
+        for authorized account.
         */
 
-        if(
-            user &&
-            user.email &&
-            user.email
-            .toLowerCase()
-            .trim() ===
-            "poetshahbaz_quambrani@gmail.com"
-        ){
+        if(isAdmin){
 
             document
             .querySelectorAll(
